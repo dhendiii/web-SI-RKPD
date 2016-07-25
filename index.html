@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <base href="http://localhost:8888/">
+
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/additional.css">
+
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/angular/angular.min.js"></script>
+    <script src="/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+
+    <script src="/bower_components/lodash/dist/lodash.min.js"></script>
+    <script src="/bower_components/sugar/release/sugar-full.min.js"></script>
+
+    <script src="/js/app.js"></script>
+    <script src="/js/berandaController.js"></script>
+    <!-- <script src="/js/coba2Controller.js"></script> -->
+
+    <title> Musrenbang Cimahi </title>
+
+</head>
+
+<body ng-controller="MainController">
+    <div ng-include src="'views/header.html'"></div>
+
+    <!-- <a ui-sref="coba1">Coba 1</a>
+    <a ui-sref="coba2">Coba 2</a> -->
+
+    <div ui-view></div>
+
+    <!-- footer -->
+    <div class="container footer">
+        <p>
+            Dhendiawan Dwiatma | 18210002 | TA Cihuy © 2016
+        </p>
+    </div>
+
+</body>
+
+</html>

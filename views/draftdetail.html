@@ -1,0 +1,243 @@
+<div class="container">
+
+    <!-- navigasi hasil post -->
+    <div class="row pagetitle">
+        <div class="container-fluid">
+            <ol class="breadcrumb bread-costum" style="">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Library</a></li>
+                <li class="active">Data</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- left side bar -->
+    <div class="col-md-3 col-sm-12 col-xs-12 pull-right sidebar">
+        <div class="col-md-12">
+            <h4>Cari rancangan/ usulan</h4>
+            <form class="form" role="form">
+                <div class="form-group">
+                    <label for="keyword">Kata kunci:</label>
+                    <input type="text" class="form-control" id="keyword" placeholder="Kata kunci">
+                    <a href="#advancedsearch" class="help-block" data-toggle="collapse">Pencarian canggih</a>
+                    <div id="advancedsearch" class="collapse">
+                        <form class="form" role="form">
+                            <div class="form-group">
+                                <label for="draft-type">Pilih jenis draft:</label>
+                                <select class="form-control" id="Rancangan">
+                                    <option>Semua</option>
+                                    <option>Rancangan</option>
+                                    <option>Usulan</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="location">Pilih lokasi:</label>
+
+                                <select class="form-control" id="kecamatan">
+                                    <option>Semua</option>
+                                    <option>kecamatan1</option>
+                                    <option>kecamatan2</option>
+                                </select>
+                                </br>
+                                <select class="form-control" id="kelurahan">
+                                    <option>Semua</option>
+                                    <option>kelurahan1</option>
+                                    <option>kelurahan2</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="verification">Pilih verifikasi:</label>
+
+                                <select class="form-control" id="verification">
+                                    <option>Semua</option>
+                                    <option>Belum terverifikasi</option>
+                                    <option>Lolos verifikasi</option>
+                                    <option>Tidak lolos verifikasi</option>
+
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="tag">Tagar:</label>
+                                <input type="text" class="form-control" id="tag" placeholder="Tagar">
+                                <span class="help-block">Mulai dengan "#" dan 1 kata saja</span>
+                            </div>
+                        </form>
+                    </div>
+                    <button type="submit" class="btn btn-default">Cari</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-md-12">
+            <h4>Tambah Usulan</h4>
+            <button type="button" class="btn btn-primary btn-block" style="text-align:left">
+                Tambah Usulan <span class=" glyphicon glyphicon-plus pull-right"></span>
+            </button>
+        </div>
+        <hr>
+    </div>
+
+    <!-- post list -->
+    <div class="col-md-9 col-sm-12 col-xs-12 pull-left">
+
+        <div class="row sort">
+            <div class="col pull-right" style="">
+                <span>
+                    Urut berdasarkan :
+                    <div class="btn-group">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                Tanggal
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#">Tanngal</a></li>
+                                <li><a href="#">Informasi</a></li>
+                                <li><a href="#">Komentar</a></li>
+                                <li><a href="#">Poin</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                <span class="glyphicon glyphicon-chevron-down"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#"><span class="glyphicon glyphicon-chevron-up" ></span></a></li>
+                                <li><a href="#"><span class="glyphicon glyphicon-chevron-down" ></span></a></li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+                </span>
+            </div>
+        </div>
+
+        <div class="row draft" ng-repeat="val in dummmData" ng-class="$odd ? 'background-grey' : ''">
+            <div class="col-md-2 col-sm-2 col-xs-2 rank">
+                <div class="col-md-6">
+                    {{ $index + 1 }}
+                </div>
+                <div class="col-md-6">
+                    <div class="row">100%</div>
+                    <div class="row rank-vote">1000</div>
+                </div>
+            </div>
+            <div class="col-md-10 col-sm-10 col-xs-10">
+                <div class="row"> {{ val.message }} <strong>Lokasi : </strong><span class="location">Cibeber, Cimahi Selatan</span>
+                </div>
+                <div class="row row-posted">
+                    Diusulkan oleh : <a href=# class="usrname">John</a>
+                    pada : <span class="postdate">10:00, 20 Juli 2016</span>
+                </div>
+                <div class="row row-tags">
+                    <a href="#" class="label label-usulan">Usulan</a>
+                    <a href="#" class="label label-verified-not" data-toggle="tooltip" title="Informasi tidak lengkap">Tidak lolos verifikasi</a>
+                    <a href="#" class="label label-tag" data-toggle="tooltip" >#tag1</a>
+                    <a href="#" class="label label-tag" data-toggle="tooltip" >#tag2</a>
+                    <a href="#" class="label label-tag" data-toggle="tooltip" >#tag3</a>
+                </div>
+                <div class="row row-bottomlink">
+                    <ul class="list-inline" style="margin-bottom:2px">
+                        <li><a href="#"class="">10 informasi</a> </li>
+                        <li><a href="#"class="">10 komentar</a> </li>
+                        <li>
+                            <a href="#" id="thums-up"> <span class=" glyphicon glyphicon-thumbs-up"></span> 100</a>
+                        </li>
+                        <li>
+                            <a href="#" id="thums-down"> <span class=" glyphicon glyphicon-thumbs-down"></span> 0</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- post -->
+        <!-- <div class="row draft">
+            <div class="col-md-2 col-sm-2 col-xs-2 rank">
+                <div class="col-md-6">
+                    1
+                </div>
+                <div class="col-md-6">
+                    <div class="row">100%</div>
+                    <div class="row rank-vote">1000</div>
+                </div>
+            </div>
+            <div class="col-md-10 col-sm-10 col-xs-10">
+                <div class="row"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean malesuada eget lectus eget mattis.
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean malesuada eget lectus eget mattis. <strong>Lokasi : </strong><span class="location">Cibeber, Cimahi Selatan</span>
+                </div>
+                <div class="row row-posted">
+                    Diusulkan oleh : <a href=# class="usrname">John</a>
+                    pada : <span class="postdate">10:00, 20 Juli 2016</span>
+                </div>
+                <div class="row row-tags">
+                    <a href="#" class="label label-usulan">Usulan</a>
+                    <a href="#" class="label label-verified-not" data-toggle="tooltip" title="Informasi tidak lengkap">Tidak lolos verifikasi</a>
+                    <a href="#" class="label label-tag" data-toggle="tooltip" >#tag1</a>
+                    <a href="#" class="label label-tag" data-toggle="tooltip" >#tag2</a>
+                    <a href="#" class="label label-tag" data-toggle="tooltip" >#tag3</a>
+                </div>
+                <div class="row row-bottomlink">
+                    <ul class="list-inline" style="margin-bottom:2px">
+                        <li><a href="#"class="">10 informasi</a> </li>
+                        <li><a href="#"class="">10 komentar</a> </li>
+                        <li>
+                            <a href="#" id="thums-up"> <span class=" glyphicon glyphicon-thumbs-up"></span> 100</a>
+                        </li>
+                        <li>
+                            <a href="#" id="thums-down"> <span class=" glyphicon glyphicon-thumbs-down"></span> 0</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row draft background-grey">
+            <div class="col-md-2 col-sm-2 col-xs-2 rank">
+                <div class="col-md-6">
+                    <h4>1</h4>
+                </div>
+                <div class="col-md-6">
+                    <h4>100%</h4>
+                </div>
+            </div>
+            <div class="col-md-10 col-sm-10 col-xs-10">
+                <div class="row"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean malesuada eget lectus eget mattis.
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean malesuada eget lectus eget mattis. <strong>Lokasi : </strong><span class="location">Cibeber, Cimahi Selatan</span>
+                </div>
+                <div class="row row-posted">
+                    Diusulkan oleh : <a href=# class="usrname">John</a>
+                    pada : <span class="postdate">10:00, 20 Juli 2016</span>
+                </div>
+                <div class="row row-tags">
+                    <a href="#" class="label label-usulan">Usulan</a>
+                    <a href="#" class="label label-verified-not" data-toggle="tooltip" title="Informasi tidak lengkap">Tidak lolos verifikasi</a>
+                    <a href="#" class="label label-tag" data-toggle="tooltip" >#tag1</a>
+                    <a href="#" class="label label-tag" data-toggle="tooltip" >#tag2</a>
+                    <a href="#" class="label label-tag" data-toggle="tooltip" >#tag3</a>
+                </div>
+                <div class="row row-bottomlink">
+                    <ul class="list-inline" style="margin-bottom:2px">
+                        <li><a href="#"class="">10 informasi</a> </li>
+                        <li><a href="#"class="">10 komentar</a> </li>
+                        <li>
+                            <a href="#" id="thums-up"> <span class=" glyphicon glyphicon-thumbs-up"></span> 100</a>
+                        </li>
+                        <li>
+                            <a href="#" id="thums-down"> <span class=" glyphicon glyphicon-thumbs-down"></span> 0</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div> -->
+
+
+        <div class="clearfix"></div>
+
+    </div>
+</div>
