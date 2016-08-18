@@ -13,6 +13,7 @@ app.controller('inputdraftController', ['$scope', 'fetcher', 'autocomplete', 'lo
 
     //cobain dynamic select
     $scope.selected             = {};
+
     $scope.dataLokasi           = autocomplete.getKelurahan();
 
 
