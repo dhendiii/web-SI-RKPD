@@ -11,7 +11,19 @@
         red : #D52724
         red-shade : #7F1716
 */
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none;   /* Chrome/Safari/Opera */
+    -khtml-user-select: none;    /* Konqueror */
+    -moz-user-select: none;      /* Firefox */
+    -ms-user-select: none;       /* Internet Explorer/Edge */
+    user-select: none;           /* Non-prefixed version, currently not supported by any browser */
+}
 
+.nopadding {
+    padding: 0px!important;
+    // margin: 0px!important;
+}
 .sidebar{
     padding-bottom: 15px;
 }
@@ -219,4 +231,44 @@
 .row-tight {
     margin-left:0px;
     margin-right:0px;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.btn-dropdown {
+    background-color: white!important;
+    border-color: none;
+
+}
+.btn-dropdown:focus {
+    outline: none;
+}
+
+.authpage {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 50%;
+    margin:auto;
+}
+
+.col-centered{
+    float: none;
+    margin: 0 auto;
+}
+
+.help-block{
+    font-size: 12px;
+    text-align: right;
+    margin-top: 2px;
+    margin-bottom: 5px;
+}
+
+body {
+    overflow-y: scroll;
 }

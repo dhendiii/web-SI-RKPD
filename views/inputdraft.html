@@ -1,0 +1,225 @@
+<div class="container">
+    <!-- {{ getAuth._id }} -->
+    <!-- main -->
+    <div class="col-md-12 col-sm-12 col-xs-12 pull-left">
+        <button type="button" name="button" ng-click="revert()">revert</button>
+        <!-- <button type="button" name="button" ng-click="next()">next</button>
+        <button type="button" name="button" ng-click="prev()">prev</button> -->
+
+        <div class="" ng-show="step == 0">
+            <form role="form" name="inputdraft1" ng-submit="submitDraft()" novalidate>
+                <!-- row konten -->
+                <h4>Usulan/ Rancangan</h4>
+                <div class="col-md-12">
+                    <div class="alert alert-danger" ng-hide="errorloginmessage == ''">
+                        <!-- Email dan password tidak cocok, mohon ulangi. -->
+                        {{ errorloginmessage }}
+                    </div>
+                </div>
+                <!-- Usulan/ Rancangan berubah sesuai user yang input -->
+                <div class="row">
+                    <div class="form-group col-md-12" show-errors>
+                        <label for="kegiatan">Konten</label>
+                        <textarea class="form-control" type="text" id="kegiatan" name="kegiatan" rows="2" ng-model="kegiatan" ng-required="true" placeholder="Tuliskan detail usulan kegiatan/ program"></textarea>
+                        <div ng-messages="inputdraft1.kegiatan.$error" ng-show="inputdraft1.kegiatan.$touched">
+                            <span class="help-block" ng-message="required">Usulan kegiatan harus diisi harus diisi</span>
+                        </div>
+                        <!-- <p> {{inputdraft1.konten.$valid}}</p> -->
+                    </div>
+                </div>
+
+                <!-- row lokasi -->
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label for="lokasi_cakupan">Cakupan Usulan/ Rancangan</label>
+
+                        <select class="form-control" id="lokasi_cakupan" ng-model="lokasi_cakupan">
+                            <option value="kota">Tingkat Kota</option>
+                            <option value="kecamatan">Tingkat Kecamatan</option>
+                            <option value="kelurahan">Tingkat Keluarahan</option>
+                            <option value="dusun">Tingkat Dusun</option>
+                        </select>
+
+                    </div>
+                </div>
+
+                <div class="row form-group">
+
+                    <label class="col-md-12" for="lokasi_label" ng-show="lokasi_cakupan != 'kota'">Lokasi</label>
+                    <div class="form-group col-md-6 col-sm-6" ng-hide="lokasi_cakupan == 'kota'" show-errors>
+                        <select class="form-control" id="lokasi_kecamatan" name="lokasi_kecamatan" ng-model="lokasi_kecamatan" ng-options="kec.kec for kec in dataLokasi" ng-required="lokasi_cakupan != 'kota'">
+                            <!-- <input type="number" ng-required="{{checked}}" class="form-control" id="inputamount" data-ng-model="itemamount" step="any" ng-show="checked"/> -->
+                            <option value="">Kecamatan</option>
+                        </select>
+                        <!-- {{ ng-required }} {{ ng-show == false }} -->
+                        <div ng-messages="inputdraft1.lokasi_kecamatan.$error" ng-show="inputdraft1.lokasi_kecamatan.$touched">
+                            <span class="help-block" ng-message="required">Kecamatan harus diisi</span>
+                        </div>
+                    </div>
+
+
+                    <!-- <div class="btn-group col-md-6 " uib-dropdown is-open="status.kecamatan" ng-hide="lokasi_cakupan == 'kota'" >
+                        <button id="single-button" class="btn btn-default col-md-12 btn-dropdown" uib-dropdown-toggle ng-disabled="disabled" ng-style="lokasi_kecamatan == '' ? {'color' : buttonplaceholder} : ''">
+                            <div class="text-left col-xs-10 nopadding">{{ (lokasi_kecamatan == '') ? 'Kecamatan' : lokasi_kecamatan }}</div><div class="col-md-2"><span class="caret"></span></div>
+                        </button>
+                        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                            <li role="menuitem" ng-repeat="kecamatanValue in listKecamatan" ng-click="kecamatanChanged(kecamatanValue)"><a href="#">{{ kecamatanValue }}</a></li>
+                        </ul>
+                    </div> -->
+
+                    <div class="form-group col-md-6 col-sm-6"  ng-hide="lokasi_cakupan == 'kota' || lokasi_cakupan == 'kecamatan'" show-errors>
+                        <select class="form-control" id="lokasi_kelurahan" name="lokasi_kelurahan" ng-model="lokasi_kelurahan" ng-required="lokasi_cakupan == 'kelurahan'  || lokasi_cakupan == 'dusun'" ng-options="kel.kel for kel in lokasi_kecamatan.kels">
+                            <!-- ng-required="ng-hide == false" -->
+                            <option value="">Kelurahan</option>
+                        </select>
+                        <div ng-messages="inputdraft1.lokasi_kelurahan.$error" ng-show="inputdraft1.lokasi_kelurahan.$touched">
+                            <span class="help-block" ng-message="required">Kelurahan harus diisi</span>
+                        </div>
+                    </div>
+
+                    <!-- <div class="btn-group col-md-6 " uib-dropdown is-open="status.kelurahan" ng-hide="lokasi_cakupan == 'kota' || lokasi_cakupan == 'kecamatan'" >
+                        <button id="single-button" class="btn btn-default col-md-12 btn-dropdown" uib-dropdown-toggle ng-disabled="disabled" ng-style="lokasi_kelurahan == '' ? {'color' : buttonplaceholder} : ''">
+                            <div class="text-left col-xs-10 nopadding">{{ (lokasi_kelurahan == '') ? 'Kelurahan' : lokasi_kelurahan }}</div><div class="col-md-2"><span class="caret"></span></div>
+                        </button>
+                        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                            <li role="menuitem" ng-repeat="kelurahanValue in listKelurahan" ng-click="kelurahanChanged(kelurahanValue)"><a href="#">{{ kelurahanValue }}</a></li>
+                        </ul>
+                    </div> -->
+
+                    <div class="form-group col-md-12" ng-hide="lokasi_cakupan == 'kota' || lokasi_cakupan == 'kecamatan' || lokasi_cakupan == 'kelurahan'" show-errors>
+                        <label for="lokasi_label">Detail lokasi</label>
+                        <input type="text" class="form-control" id="lokasi_detail" name="lokasi_detail" ng-model="lokasi_detail"  ng-required="lokasi_cakupan == 'dusun'" placeholder="Detail lokasi" capitalize-first>
+                        <!-- ng-required="ng-hide == false " -->
+                        <div ng-messages="inputdraft1.lokasi_detail.$error" ng-show="inputdraft1.lokasi_detail.$touched">
+                            <span class="help-block" ng-message="required">Detail lokasi harus diisi</span>
+                        </div>
+                    </div>
+
+
+                    <!-- <div class="form-group col-md-12" ng-hide="lokasi_cakupan == 'kota' || lokasi_cakupan == 'kecamatan' || lokasi_cakupan == 'kelurahan'">
+                        <label for="lokasi_detail"></label>
+                        <input type="text" class="form-control" id="lokasi_detail" ng-model="lokasi_detail" placeholder="Detail lokasi">
+                    </div> -->
+
+                </div>
+                <div class="row">
+                    <!-- tagar -->
+                    <!-- masih PR masalah tag -->
+                    <div class="form-group col-md-6">
+                        <label for="tags">Tagar</label>
+                        <input type="text" class="form-control" id="tags" ng-model="tags" ng-list="#" >
+                        <span id="helpBlock" class="help-block">Maksimal 3 tagar, setiap tagar dimulai dengan "#"</span>
+                        {{tags|json}}
+
+
+                        <!-- <tags-input ng-model="tags" add-on-paste="true">
+                            <auto-complete source="tagslist"></auto-complete>
+                        </tags-input>
+                        <p>Model: {{tags}}</p> -->
+
+                    </div>
+                    <!-- skpd -->
+                    <div class="form-group col-md-6">
+                        <label for="skpd">SKPD <small>Isi jika sudah tahu pasti</small></label>
+                        <!-- <input type="text" ng-model="skpd" uib-typeahead="skpd.nLengkap for skpd in listskpd | filter:$viewValue | limitTo:8" class="form-control" placeholder="SKPD"> -->
+                        <input type="text" ng-model="skpd" uib-typeahead="skpd as skpd.nLengkap for skpd in listskpd | filter:$viewValue | limitTo:8" class="form-control" placeholder="SKPD">
+
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary pull-right" ng-click="next()"ng-disabled="inputdraft1.$invalid">Submit</button>
+            </form>
+        </div>
+
+        <!-- input informasi 1 -->
+        <div ng-show="step == 1">
+            <h4>Informasi <span class="small">minimal untuk rancangan awal</span></h4>
+            <form role="form">
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="kpi">Indikator Kinejra Program</label>
+                    </div>
+                    <div class="row row-tight">
+                        <div class="form-group col-md-6">
+                            <textarea class="form-control" name="kpi" rows="2" ng-model="kpi"></textarea>
+                        </div>
+
+                        <div class="form-group form-inline col-md-6">
+                            <input type="number" class="form-control" id="kpi.jumlah" placeholder="Jumlah target" ng-model="kpi_jumlah"> &nbsp;
+                            <div class="form-group">
+                                <!-- <select class="form-control" id="unit" ng-model="kpi_unit">
+                                    <option selected="selected">m2</option>
+                                    <option>orang</option>
+                                    <option>lainnya</option>
+                                </select> -->
+                                <select class="form-control" ng-model="kpi_unit" ng-options="unit for unit in listunit" ng-init="kpi_unit = listunit[0]" ><option></option></select>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-group col-md-6">
+                        <div class="input-group">
+                            <div class="input-group-addon">Rp</div>
+                            <input type="number" class="form-control" id="asumsibiaya" placeholder="Asumsi biaya" ng-model="asumsibiaya">
+                            <div class="input-group-addon">.00</div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <input type="text" class="form-control" id="sumberdana" placeholder="Sumber dana*" ng-model="sumberdana">
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="jeniskegiatan">Jenis kegiatan*</label>
+                        <div class="form-group">
+                            <select class="form-control" id="jeniskegiatan" ng-model="jeniskegiatan">
+                                <option>Kegiatan baru</option>
+                                <option>Usulan baru</option>
+                                <option>lainnya</option>
+                            </select>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row row-tight">
+                    <button type="submit" class="btn btn-default" ng-click="prev()">Edit sebelumnya</button>
+                    <button type="submit" class="btn btn-default pull-right" ng-click="next()">Submit</button>
+
+                </div>
+
+
+            </form>
+        </div>
+
+        <div  ng-show="step == 2">
+            <h4>Informasi <span class="small">pelengkap untuk dipertimbangkan</span></h4>
+            <form role="form">
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="uploadPhoto">Unggah foto</label>
+                        <input type="file" id="uploadPhoto">
+                        <p class="help-block">Usuhakan foto jelas</p>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="uploadProposal">Unggah proposal</label>
+                        <input type="file" id="uploadProposal">
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label for="konten">Catatan tambahan</label>
+                        <textarea class="form-control" name="konten" rows="2"></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-default" ng-click="prev()">Edit sebelumnya</button>
+                <button type="submit" class="btn btn-default pull-right">Submit</button>
+
+            </form>
+        </div>
+        <div class="clearfix"></div>
+
+    </div>
+    <!-- end main -->
+</div>

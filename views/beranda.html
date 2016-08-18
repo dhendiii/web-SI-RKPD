@@ -12,6 +12,7 @@
     </div>
 
     <!-- left side bar -->
+    <!-- <div ui-view="sidebar"></div> -->
     <div class="col-md-3 col-sm-12 col-xs-12 pull-right sidebar">
         <div class="col-md-12">
             <h4>Cari rancangan/ usulan</h4>
@@ -73,14 +74,17 @@
 
         <div class="col-md-12">
             <h4>Tambah Usulan</h4>
-            <button type="button" class="btn btn-primary btn-block" style="text-align:left">
+            <button type="button" class="btn btn-primary btn-block" style="text-align:left" ng-click="go('/inputdraft')">
                 Tambah Usulan <span class=" glyphicon glyphicon-plus pull-right"></span>
             </button>
         </div>
+            <a href="/inputdraft"> inputdraft</a>
         <hr>
     </div>
 
+
     <!-- post list -->
+
     <div class="col-md-9 col-sm-12 col-xs-12 pull-left">
 
         <div class="row sort">

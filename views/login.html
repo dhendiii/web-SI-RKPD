@@ -1,0 +1,39 @@
+<div class="container">
+
+    <div class="col-md-6 col-centered">
+        <div class="col-md-12">
+            <div class="alert alert-danger" ng-hide="errorloginmessage == ''">
+                 <!-- Email dan password tidak cocok, mohon ulangi. -->
+                 {{ errorloginmessage }}
+            </div>
+        </div>
+        <form name="login" role="form" ng-submit="submitLogin()" novalidate>
+            <div class="form-group col-md-12" show-errors>
+                <label for="inputUsernameEmail">E-mail</label>
+                <input class="form-control" type="email" name="email" id="email" placeholder="Alamat email" ng-model="email" ng-required="true">
+                <div ng-messages="login.email.$error" ng-show="login.email.$touched">
+                    <span class="help-block" ng-message="required">Email harus diisi</span>
+                    <span class="help-block" ng-message="email">Format penulisan email salah</span>
+                </div>
+            </div>
+            <div class="form-group col-md-12" show-errors>
+                <label for="inputPassword">Password</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Password" ng-model="password" ng-required="true">
+                <div ng-messages="login.password.$error" ng-show="login.password.$touched">
+                    <span class="help-block" ng-message="required">Password harus diisi</span>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <a href="#" class="pull-left" >Lupa password?</a>
+                <div class="checkbox pull-right">
+                    <label> <input type="checkbox"> Ingat saya </label>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <button type="submit" class="btn btn btn-primary pull-right" ng-disabled="login.$invalid">
+                    Masuk
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

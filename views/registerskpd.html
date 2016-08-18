@@ -1,0 +1,97 @@
+<div class="container">
+
+    <div class="authpage">
+        <form role="form" ng-submit="submitUser()">
+
+            <!-- row nama -->
+            <!-- <div class="form-group form-inline"> -->
+            <div class="col-md-12">
+                <label for="nama">Nama</label>
+            </div>
+            <div class="form-group col-md-6">
+                <input type="text" class="form-control" id="nama_depan" placeholder="Nama depan" ng-model="nama_depan">
+            </div>
+
+            <div class="form-group col-md-6">
+                <input type="text" class="form-control" id="nama_belakang" placeholder="Nama belakang" ng-model="nama_belakang">
+            </div>
+
+            <!-- row ktp -->
+            <div class="form-group col-md-12">
+                <label for="no-ktp">Nomor KTP</label>
+                <input type="number" class="form-control" id="no_ktp" placeholder="Nomor Kartu Tanda Penduduk" ng-model="no_ktp">
+                <span class="help-block" style="margin-bottom:0px">Tulis angka saja tanpa karakter tambahan</span>
+            </div>
+
+            <!-- row lokasi -->
+            <div class="form-group col-md-12">
+                <label for="lokasi_label">Alamat rumah</label>
+                <input type="text" class="form-control" id="lokasi_detail" ng-model="lokasi_detail" placeholder="Detail lokasi">
+            </div>
+            <div class="form-group col-md-6">
+                <div class="btn-group col-md-12 nopadding" uib-dropdown is-open="status.kecamatan" ng-hide="lokasi_cakupan == 'kota'" >
+                    <button  class="btn btn-default col-md-12 btn-dropdown" id="lokasi_kecamatan" ng-model="lokasi_kecamatan"  uib-dropdown-toggle ng-disabled="disabled" ng-style="lokasi_kecamatan == '' ? {'color' : buttonplaceholder} : ''">
+                        <div class="text-left col-xs-10 nopadding">{{ (lokasi_kecamatan == '') ? 'Kecamatan' : lokasi_kecamatan }}</div><div class="col-md-2"><span class="caret"></span></div>
+                    </button>
+                    <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                        <li role="menuitem" ng-repeat="kecamatanValue in listKecamatan" ng-click="kecamatanChanged(kecamatanValue)"><a href="#">{{ kecamatanValue }}</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <div class="btn-group col-md-12 nopadding" uib-dropdown is-open="status.kelurahan" >
+                    <button class="btn btn-default col-md-12 btn-dropdown" id="lokasi_kelurahan" ng-model="lokasi_kelurahan"  uib-dropdown-toggle ng-disabled="disabled" ng-style="lokasi_kelurahan == '' ? {'color' : buttonplaceholder} : ''">
+                        <div class="text-left col-xs-10 nopadding">{{ (lokasi_kelurahan == '') ? 'Kelurahan' : lokasi_kelurahan }}</div><div class="col-md-2"><span class="caret"></span></div>
+                    </button>
+                    <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                        <li role="menuitem" ng-repeat="kelurahanValue in listKelurahan" ng-click="kelurahanChanged(kelurahanValue)"><a href="#">{{ kelurahanValue }}</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="">
+                <div class="form-group col-md-12">
+                    <label for="no-nik">Pendaftaran tambahan untuk pemerintah</label>
+                </div>
+                <div class="form-group col-md-6 ">
+                    <input type="text" ng-model="skpd" uib-typeahead="skpd.nLengkap for skpd in listskpd | filter:$viewValue | limitTo:8" class="form-control" placeholder="SKPD">
+                </div>
+                <div class="form-group col-md-6 ">
+                    <input type="text" class="form-control" id="Jabatan" placeholder="Jabatan" ng-model="skpd_role">
+                </div>
+            </div>
+
+            <!-- row email -->
+            <div class="col-md-12">
+                <label for="email">E-mail dan nomor telepon</label>
+            </div>
+            <div class="form-group col-md-6">
+                <input type="email" class="form-control" id="email" placeholder="Alamat e-mail" ng-model="email">
+            </div>
+            <!-- row no hp -->
+            <div class="form-group col-md-6">
+                <input type="number" class="form-control" id="no_hp" placeholder="Nomor telepon" ng-model="no_hp">
+            </div>
+
+            <!-- row password -->
+            <div class="col-md-12">
+                <label for="email">Password atau kata kunci</label>
+            </div>
+            <div class="form-group col-md-6">
+                <input type="password" class="form-control" id="password" placeholder="Password" ng-model="password">
+            </div>
+            <div class="form-group col-md-6">
+                <input type="password" class="form-control" id="password" placeholder="Ulangi password">
+            </div>
+
+            <!-- row nik -->
+
+            <div class="col-md-12">
+                <button type="submit" class="btn btn btn-primary ">
+                    Daftar
+                </button>
+
+            </div>
+        </form>
+
+    </div>
+</div>

@@ -1,4 +1,9 @@
-app.controller('berandaController', ['$scope', function($scope){
+app.controller('berandaController', ['$scope', '$location',function($scope, $location){
+    // $scope.getDraft     = getDraft(),
+    $scope.go = function (path) {
+        $location.path( path );
+    };
+
     $scope.dummmData = [
         {
             "_id": "576c34e744a5790cac14d2b3",
