@@ -10,7 +10,7 @@ app.config(function ($stateProvider, $locationProvider, $urlRouterProvider) {
 
     $urlRouterProvider.otherwise( function($injector) {
         var $state = $injector.get("$state");
-        $state.go('beranda');
+        $state.go('home');
     });
 
     $stateProvider
@@ -20,17 +20,42 @@ app.config(function ($stateProvider, $locationProvider, $urlRouterProvider) {
     //     controller : 'headerController',
     // })
 
-    .state('beranda', {
-        url : '/',
+    // .state('home', {
+    //     url: '',
+    //     // templateUrl: 'views/beranda.html',
+    //     // controller: 'berandaController',
+    //     views: {
+    //         '' : {
+    //             templateUrl : 'views/beranda.html',
+    //             // controller : 'berandaController'
+    //         },
+    //         'sidebar' : {
+    //             templateUrl : 'views/sidebar.html',
+    //             // controller  : 'sidebarController'
+    //         },
+    //         'drafts' : {
+    //             templateUrl : 'views/drafts.html',
+    //             // controller  : 'draftsController'
+    //         }
+    //     }
+    // })
+
+    .state('home', {
+        // abstract: true,
+        url: '',
         templateUrl : 'views/beranda.html',
-        controller : 'berandaController',
-        // views: {
-        //     'sidebar': {
-        //         templateUrl: 'views/sidebar.html',
-        //         controller: 'sidebarController',
-        //     }
-        // }
+        controller : 'berandaController'
     })
+
+    .state('home.drafts', {
+        templateUrl : 'views/drafts.html',
+        controller : 'draftsController'
+    })
+
+    // .state('home.sidebar', {
+    //     templateUrl : 'views/sidebar.html',
+    //     controller : 'sidebarController'
+    // })
 
     // .state('sidebar', {
     //     // url : '/',

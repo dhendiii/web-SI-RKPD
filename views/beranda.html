@@ -1,7 +1,7 @@
 <div class="container">
 
     <!-- navigasi hasil post -->
-    <div class="row pagetitle">
+    <!-- <div class="row pagetitle">
         <div class="container-fluid">
             <ol class="breadcrumb bread-costum" style="">
                 <li><a href="#">Home</a></li>
@@ -9,81 +9,17 @@
                 <li class="active">Data</li>
             </ol>
         </div>
-    </div>
+    </div> -->
 
     <!-- left side bar -->
-    <!-- <div ui-view="sidebar"></div> -->
-    <div class="col-md-3 col-sm-12 col-xs-12 pull-right sidebar">
-        <div class="col-md-12">
-            <h4>Cari rancangan/ usulan</h4>
-            <form class="form" role="form">
-                <div class="form-group">
-                    <label for="keyword">Kata kunci:</label>
-                    <input type="text" class="form-control" id="keyword" placeholder="Kata kunci">
-                    <a href="#advancedsearch" class="help-block" data-toggle="collapse">Pencarian canggih</a>
-                    <div id="advancedsearch" class="collapse">
-                        <form class="form" role="form">
-                            <div class="form-group">
-                                <label for="draft-type">Pilih jenis draft:</label>
-                                <select class="form-control" id="Rancangan">
-                                    <option>Semua</option>
-                                    <option>Rancangan</option>
-                                    <option>Usulan</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="location">Pilih lokasi:</label>
-
-                                <select class="form-control" id="kecamatan">
-                                    <option>Semua</option>
-                                    <option>kecamatan1</option>
-                                    <option>kecamatan2</option>
-                                </select>
-                                </br>
-                                <select class="form-control" id="kelurahan">
-                                    <option>Semua</option>
-                                    <option>kelurahan1</option>
-                                    <option>kelurahan2</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="verification">Pilih verifikasi:</label>
-
-                                <select class="form-control" id="verification">
-                                    <option>Semua</option>
-                                    <option>Belum terverifikasi</option>
-                                    <option>Lolos verifikasi</option>
-                                    <option>Tidak lolos verifikasi</option>
-
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="tag">Tagar:</label>
-                                <input type="text" class="form-control" id="tag" placeholder="Tagar">
-                                <span class="help-block">Mulai dengan "#" dan 1 kata saja</span>
-                            </div>
-                        </form>
-                    </div>
-                    <button type="submit" class="btn btn-default">Cari</button>
-                </div>
-            </form>
-        </div>
-
-        <div class="col-md-12">
-            <h4>Tambah Usulan</h4>
-            <button type="button" class="btn btn-primary btn-block" style="text-align:left" ng-click="go('/inputdraft')">
-                Tambah Usulan <span class=" glyphicon glyphicon-plus pull-right"></span>
-            </button>
-        </div>
-            <a href="/inputdraft"> inputdraft</a>
-        <hr>
+    <!-- <div ui-view></div> -->
+    <div class="col-md-3 col-sm-12 col-xs-12 pull-right sidebar" style="background-color:yellow">
+        <div ui-view="sidebar"></div>
     </div>
-
-
     <!-- post list -->
+    <div class="col-md-9 col-sm-12 col-xs-12 pull-left" style="background-color:green">
+        <div ui-view="drafts"></div>
+    </div>
 
     <div class="col-md-9 col-sm-12 col-xs-12 pull-left">
 

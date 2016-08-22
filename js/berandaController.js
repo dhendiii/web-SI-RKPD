@@ -1,8 +1,5 @@
-app.controller('berandaController', ['$scope', '$location',function($scope, $location){
-    // $scope.getDraft     = getDraft(),
-    $scope.go = function (path) {
-        $location.path( path );
-    };
+app.controller('berandaController', ['$scope', function($scope){
+    console.log('berandaController');
 
     $scope.dummmData = [];
 
