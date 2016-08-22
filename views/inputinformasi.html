@@ -1,0 +1,109 @@
+<div class="container">
+    <!-- {{ getAuth._id }} -->
+    <!-- main -->
+    <div class="col-md-8 col-centered">
+
+        <!-- input informasi 1 -->
+        <form role="form" name="inputinformasi" ng-submit="submitInformasi()" novalidate>
+            <h3>Informasi <span class="small">minimal untuk rancangan awal</span></h3>
+            <hr>
+            <div class="row row-tight">
+                <div class="alert alert-danger" ng-hide="errorloginmessage == ''">
+                    <!-- Email dan password tidak cocok, mohon ulangi. -->
+                    {{ errorloginmessage }}
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="kpi">Indikator Kinejra Program</label>
+                </div>
+                <!-- <div class="row row-tight"> -->
+                    <div class="form-group col-md-12">
+                        <textarea class="form-control" type="text" id="kpi_konten" name="kpi_konten" rows="2" ng-model="kpi_konten" ng-required="true" placeholder="Tuliskan indikator kinerja program"></textarea>
+                        <!-- <div ng-messages="inputinformasi.kpi.$error" ng-show="inputinformasi.kpi.$touched">
+                            <span class="help-block" ng-message="required">Indikator kinerja program harus diisi harus diisi</span>
+                        </div> -->
+                    </div>
+                <!-- </div> -->
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-8 col-xs-8">
+                    <input type="number" class="form-control" id="kpi_jumlah" name="kpi_jumlah" placeholder="Jumlah target" ng-model="kpi_jumlah" ng-required="true">
+                    <!-- <div ng-messages="inputinformasi.kpi_jumlah.$error" ng-show="inputinformasi.kpi_jumlah.$touched">
+                    <span class="help-block" ng-message="required">Indikator kinerja program harus diisi harus diisi</span>
+                    </div> -->
+                </div>
+
+                <div class="form-group col-md-4 col-xs-4">
+                    <select class="form-control" id="kpi_unit" name="kpi_unit" ng-model="kpi_unit" ng-options="unit for unit in listunit" ng-required="true">
+                        <option value="">Unit</option>
+                    </select>
+                    <!-- <div ng-messages="inputinformasi.kpi_unit.$error" ng-show="inputinformasi.kpi_unit.$touched">
+                    <span class="help-block" ng-message="required">Harus diisi</span>
+                    </div> -->
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group inline col-md-12">
+                    <label for="anggaran">Rencana anggaran</label>
+                    <div class="input-group">
+                        <div class="input-group-addon">Rp</div>
+                        <!-- <input type="text" class="form-control" id="exampleInputAmount" placeholder="Amount"> -->
+                        <input type="number" class="form-control" name="anggaran" id="anggaran" placeholder="Asumsi jumlah anggaran" ng-model="anggaran" ng-required="true">
+                        <div class="input-group-addon">,00</div>
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <!-- <label for="sumberdana">Rencana Sumber Dana</label> -->
+                    <input type="text" class="form-control" id="sumberanggaran" name="sumberanggaran" placeholder="Asumsi sumber anggaran" ng-model="sumberanggaran">
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label for="jeniskegiatan">Jenis kegiatan*</label>
+                    <div class="form-group">
+                        <select class="form-control" id="jeniskegiatan" name="jeniskegiatan" ng-model="jeniskegiatan">
+                            <option value="">Jenis kegiatan</option>
+                            <option>Kegiatan baru</option>
+                            <option>Usulan baru</option>
+                            <option>lainnya</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- informasi tambahan -->
+            <h3>Informasi <span class="small">pelengkap untuk dipertimbangkan</span></h3>
+            <hr>
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <label for="uploadPhoto">Unggah foto</label>
+                    <span class="help-block" style="float: right !important">Usuhakan foto jelas</span>
+                    <input type="file" id="uploadPhoto">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label for="uploadProposal">Unggah proposal</label>
+                    <input type="file" id="uploadProposal">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <label for="keterangan">Catatan tambahan</label>
+                    <textarea class="form-control" id="keterangan" name="keterangan" ng-model="keterangan" rows="2"></textarea>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary pull-right">Submit</button>
+        </form>
+        <div class="clearfix"></div>
+    </div>
+</div>

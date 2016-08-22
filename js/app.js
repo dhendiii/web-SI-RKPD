@@ -48,6 +48,18 @@ app.config(function ($stateProvider, $locationProvider, $urlRouterProvider) {
         url : '/inputdraft',
         templateUrl : 'views/inputdraft.html',
         controller : 'inputdraftController',
+        data: {
+            permissions: {
+                only: ['isAuthorized'],
+                redirectTo: 'beranda'
+            }
+        }
+    })
+
+    .state('inputinformasi', {
+        url : '/inputinformasi',
+        templateUrl : 'views/inputinformasi.html',
+        controller : 'inputinformasiController',
         // data: {
         //     permissions: {
         //         only: ['isAuthorized'],
@@ -63,7 +75,7 @@ app.config(function ($stateProvider, $locationProvider, $urlRouterProvider) {
         controller : 'authController',
         data : {
             permissions: {
-                only: ['isAuthorized'],
+                except: ['isAuthorized'],
                 redirectTo: 'beranda'
             }
         }
@@ -76,7 +88,7 @@ app.config(function ($stateProvider, $locationProvider, $urlRouterProvider) {
     })
 
     .state('authlanding.register', {
-        url : '/register',
+        url : '',
         templateUrl : 'views/register.html',
         controller : 'registerController'
     })
@@ -101,7 +113,7 @@ app.config(function ($stateProvider, $locationProvider, $urlRouterProvider) {
 app.run(function (PermissionStore, localStorageService) {
     PermissionStore
         .definePermission('isAuthorized', function () {
-            return _.isNull(localStorageService.get('result'));
+            return !_.isNull(localStorageService.get('result'));
         });
 });
 
@@ -133,11 +145,8 @@ app.controller('MainController', ['$scope', '$rootScope', '$state', 'localStorag
     $scope.showLogin      = _.isNull(localStorageService.get('result'));
     // $scope.getAuthId        = localStorageService.get('_id');
 
-
     $scope.getAuth        = localStorageService.get('result');
     // console.log({{getAuthID}});
-
-    // if ()
 
     $scope.logout           = function() {
         $scope.showLogin    = true;
@@ -153,4 +162,5 @@ app.controller('MainController', ['$scope', '$rootScope', '$state', 'localStorag
     };
     console.log($scope.getAuth);
     console.log($scope.showLogin);
+    console.log(localStorageService.get('_id'));
 }]);

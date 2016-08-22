@@ -79,15 +79,16 @@ app.controller('registerController', ['$scope', '$state', 'fetcher', 'autocomple
         fetcher.postUser(data, function(response){
             console.log(response);
             if (response.response == 'OK' && response.status_code == 200) {
-                localStorageService.set('_id', response.result.id);
+                localStorageService.set('_id', response.result._id);
                 localStorageService.set('result', response.result);
                 // localStorageService.set('nama_depan', response.result.nama_depan);
                 // localStorageService.set('nama_belakang', response.result.nama_belakang);
                 // localStorageService.set('role', response.result.role);
                 $state.go('beranda');
-                // $scope.$parent.$parent.showLogin    = false;
+                $scope.$parent.$parent.showLogin    = false;
+                $scope.$parent.$parent.getAuth      = response.result;
                 // console.log('berhasil');
-                console.log('respone.result');
+                console.log(response.result);
 
             } else {
                 $scope.errorloginmessage    = response.message.substr(0, response.message.indexOf('on line'));

@@ -1,16 +1,17 @@
 <div class="container">
     <!-- {{ getAuth._id }} -->
     <!-- main -->
-    <div class="col-md-12 col-sm-12 col-xs-12 pull-left">
-        <button type="button" name="button" ng-click="revert()">revert</button>
+    <div class="col-md-8 col-centered">
+        <!-- <button type="button" name="button" ng-click="revert()">revert</button> -->
         <!-- <button type="button" name="button" ng-click="next()">next</button>
         <button type="button" name="button" ng-click="prev()">prev</button> -->
 
         <div class="" ng-show="step == 0">
-            <form role="form" name="inputdraft1" ng-submit="submitDraft()" novalidate>
+            <form role="form" name="inputdraft" ng-submit="submitDraft()" novalidate>
                 <!-- row konten -->
-                <h4>Usulan/ Rancangan</h4>
-                <div class="col-md-12">
+                <h3>Usulan/ Rancangan</h3>
+                <hr>
+                <div class="row row-tight">
                     <div class="alert alert-danger" ng-hide="errorloginmessage == ''">
                         <!-- Email dan password tidak cocok, mohon ulangi. -->
                         {{ errorloginmessage }}
@@ -21,10 +22,10 @@
                     <div class="form-group col-md-12" show-errors>
                         <label for="kegiatan">Konten</label>
                         <textarea class="form-control" type="text" id="kegiatan" name="kegiatan" rows="2" ng-model="kegiatan" ng-required="true" placeholder="Tuliskan detail usulan kegiatan/ program"></textarea>
-                        <div ng-messages="inputdraft1.kegiatan.$error" ng-show="inputdraft1.kegiatan.$touched">
+                        <div ng-messages="inputdraft.kegiatan.$error" ng-show="inputdraft.kegiatan.$touched">
                             <span class="help-block" ng-message="required">Usulan kegiatan harus diisi harus diisi</span>
                         </div>
-                        <!-- <p> {{inputdraft1.konten.$valid}}</p> -->
+                        <!-- <p> {{inputdraft.konten.$valid}}</p> -->
                     </div>
                 </div>
 
@@ -52,7 +53,7 @@
                             <option value="">Kecamatan</option>
                         </select>
                         <!-- {{ ng-required }} {{ ng-show == false }} -->
-                        <div ng-messages="inputdraft1.lokasi_kecamatan.$error" ng-show="inputdraft1.lokasi_kecamatan.$touched">
+                        <div ng-messages="inputdraft.lokasi_kecamatan.$error" ng-show="inputdraft.lokasi_kecamatan.$touched">
                             <span class="help-block" ng-message="required">Kecamatan harus diisi</span>
                         </div>
                     </div>
@@ -72,7 +73,7 @@
                             <!-- ng-required="ng-hide == false" -->
                             <option value="">Kelurahan</option>
                         </select>
-                        <div ng-messages="inputdraft1.lokasi_kelurahan.$error" ng-show="inputdraft1.lokasi_kelurahan.$touched">
+                        <div ng-messages="inputdraft.lokasi_kelurahan.$error" ng-show="inputdraft.lokasi_kelurahan.$touched">
                             <span class="help-block" ng-message="required">Kelurahan harus diisi</span>
                         </div>
                     </div>
@@ -90,7 +91,7 @@
                         <label for="lokasi_label">Detail lokasi</label>
                         <input type="text" class="form-control" id="lokasi_detail" name="lokasi_detail" ng-model="lokasi_detail"  ng-required="lokasi_cakupan == 'dusun'" placeholder="Detail lokasi" capitalize-first>
                         <!-- ng-required="ng-hide == false " -->
-                        <div ng-messages="inputdraft1.lokasi_detail.$error" ng-show="inputdraft1.lokasi_detail.$touched">
+                        <div ng-messages="inputdraft.lokasi_detail.$error" ng-show="inputdraft.lokasi_detail.$touched">
                             <span class="help-block" ng-message="required">Detail lokasi harus diisi</span>
                         </div>
                     </div>
@@ -126,7 +127,7 @@
 
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary pull-right" ng-click="next()"ng-disabled="inputdraft1.$invalid">Submit</button>
+                <button type="submit" class="btn btn-primary pull-right" ng-click="next()"ng-disabled="inputdraft.$invalid">Submit</button>
             </form>
         </div>
 

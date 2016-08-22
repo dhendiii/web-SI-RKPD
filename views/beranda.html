@@ -120,7 +120,9 @@
             </div>
         </div>
 
-        <div class="row draft" ng-repeat="val in dummmData" ng-class="$odd ? 'background-grey' : ''">
+        <button type="button" name="button" ng-click="randomArray()">BUTTON!!!!</button>
+
+        <div class="row draft" ng-repeat="val in dummmData track by $index" ng-class="$odd ? 'background-grey' : ''">
             <div class="col-md-2 col-sm-2 col-xs-2 rank">
                 <div class="col-md-6">
                     {{ $index + 1 }}

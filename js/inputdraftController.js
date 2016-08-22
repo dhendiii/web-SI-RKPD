@@ -1,4 +1,5 @@
-app.controller('inputdraftController', ['$scope', 'fetcher', 'autocomplete', 'localStorageService', function($scope, fetcher, autocomplete, localStorageService){
+app.controller('inputdraftController', ['$scope', '$state', 'fetcher', 'autocomplete', 'localStorageService', function($scope, $state, fetcher, autocomplete, localStorageService){
+    'use strict';
     $scope.step = 0;
     $scope.buttonplaceholder    = '#A9A9AD';
 
@@ -66,10 +67,14 @@ app.controller('inputdraftController', ['$scope', 'fetcher', 'autocomplete', 'lo
         console.log(data);
 
         fetcher.postDraft(data, function(response) {
-            console.log(response);
             if (response.response == 'OK' && response.status_code == 200) {
+                // localStorageService.set('draft_res', response.result);
+                $scope.draft_id         = response.result._id;
+                $state.go('inputinformasi');
                 console.log('berhasil');
-                console.log(data._id)
+                // console.log(localStorageService.draft_res._id);
+                console.log($scope.draft_id);
+
             } else {
                 $scope.errorloginmessage    = response.message;
             }

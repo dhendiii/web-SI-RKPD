@@ -20,12 +20,8 @@ app.controller('loginController', ['$scope', '$state', 'fetcher', 'localStorageS
                 // localStorageService.set('role', response.result.role);
                 $state.go('beranda');
                 $scope.$parent.$parent.showLogin    = false;
+                $scope.$parent.$parent.getAuth      = response.result;
 
-                console.log(response.result);
-                console.log(response.result._id);
-                console.log(response.result.nama_belakang);
-                console.log(response.result.nama_depan);
-                console.log(response.result.role);
             } else {
                 $scope.errorloginmessage    = response.message.substr(0, response.message.indexOf('on line'));
             }
