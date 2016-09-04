@@ -5,11 +5,13 @@
         <!-- <button type="button" name="button" ng-click="revert()">revert</button> -->
         <!-- <button type="button" name="button" ng-click="next()">next</button>
         <button type="button" name="button" ng-click="prev()">prev</button> -->
+        <div ng-show="step==0">
 
-        <div class="" ng-show="step == 0">
+
             <form role="form" name="inputdraft" ng-submit="submitDraft()" novalidate>
                 <!-- row konten -->
-                <h3>Usulan/ Rancangan</h3>
+                <!-- <h3>Usulan/ Rancangan</h3> -->
+                <h3>Input {{getAuth.user_tipe === "pemerintah" ? "Rancangan" :  "Usulan"}}</h3>
                 <hr>
                 <div class="row row-tight">
                     <div class="alert alert-danger" ng-hide="errorloginmessage == ''">
@@ -21,13 +23,14 @@
                 <div class="row">
                     <div class="form-group col-md-12" show-errors>
                         <label for="kegiatan">Konten</label>
-                        <textarea class="form-control" type="text" id="kegiatan" name="kegiatan" rows="2" ng-model="kegiatan" ng-required="true" placeholder="Tuliskan detail usulan kegiatan/ program"></textarea>
+                        <textarea class="form-control" type="text" id="kegiatan" name="kegiatan" rows="2" ng-model="kegiatan" ng-required="true" placeholder="Tuliskan detail usulan kegiatan/ program" capitalize-first></textarea>
                         <div ng-messages="inputdraft.kegiatan.$error" ng-show="inputdraft.kegiatan.$touched">
                             <span class="help-block" ng-message="required">Usulan kegiatan harus diisi harus diisi</span>
                         </div>
                         <!-- <p> {{inputdraft.konten.$valid}}</p> -->
                     </div>
                 </div>
+
 
                 <!-- row lokasi -->
                 <div class="row">
@@ -59,15 +62,6 @@
                     </div>
 
 
-                    <!-- <div class="btn-group col-md-6 " uib-dropdown is-open="status.kecamatan" ng-hide="lokasi_cakupan == 'kota'" >
-                        <button id="single-button" class="btn btn-default col-md-12 btn-dropdown" uib-dropdown-toggle ng-disabled="disabled" ng-style="lokasi_kecamatan == '' ? {'color' : buttonplaceholder} : ''">
-                            <div class="text-left col-xs-10 nopadding">{{ (lokasi_kecamatan == '') ? 'Kecamatan' : lokasi_kecamatan }}</div><div class="col-md-2"><span class="caret"></span></div>
-                        </button>
-                        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
-                            <li role="menuitem" ng-repeat="kecamatanValue in listKecamatan" ng-click="kecamatanChanged(kecamatanValue)"><a href="#">{{ kecamatanValue }}</a></li>
-                        </ul>
-                    </div> -->
-
                     <div class="form-group col-md-6 col-sm-6"  ng-hide="lokasi_cakupan == 'kota' || lokasi_cakupan == 'kecamatan'" show-errors>
                         <select class="form-control" id="lokasi_kelurahan" name="lokasi_kelurahan" ng-model="lokasi_kelurahan" ng-required="lokasi_cakupan == 'kelurahan'  || lokasi_cakupan == 'dusun'" ng-options="kel.kel for kel in lokasi_kecamatan.kels">
                             <!-- ng-required="ng-hide == false" -->
@@ -77,15 +71,6 @@
                             <span class="help-block" ng-message="required">Kelurahan harus diisi</span>
                         </div>
                     </div>
-
-                    <!-- <div class="btn-group col-md-6 " uib-dropdown is-open="status.kelurahan" ng-hide="lokasi_cakupan == 'kota' || lokasi_cakupan == 'kecamatan'" >
-                        <button id="single-button" class="btn btn-default col-md-12 btn-dropdown" uib-dropdown-toggle ng-disabled="disabled" ng-style="lokasi_kelurahan == '' ? {'color' : buttonplaceholder} : ''">
-                            <div class="text-left col-xs-10 nopadding">{{ (lokasi_kelurahan == '') ? 'Kelurahan' : lokasi_kelurahan }}</div><div class="col-md-2"><span class="caret"></span></div>
-                        </button>
-                        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
-                            <li role="menuitem" ng-repeat="kelurahanValue in listKelurahan" ng-click="kelurahanChanged(kelurahanValue)"><a href="#">{{ kelurahanValue }}</a></li>
-                        </ul>
-                    </div> -->
 
                     <div class="form-group col-md-12" ng-hide="lokasi_cakupan == 'kota' || lokasi_cakupan == 'kecamatan' || lokasi_cakupan == 'kelurahan'" show-errors>
                         <label for="lokasi_label">Detail lokasi</label>
@@ -97,130 +82,168 @@
                     </div>
 
 
-                    <!-- <div class="form-group col-md-12" ng-hide="lokasi_cakupan == 'kota' || lokasi_cakupan == 'kecamatan' || lokasi_cakupan == 'kelurahan'">
-                        <label for="lokasi_detail"></label>
-                        <input type="text" class="form-control" id="lokasi_detail" ng-model="lokasi_detail" placeholder="Detail lokasi">
-                    </div> -->
-
                 </div>
-                <div class="row">
-                    <!-- tagar -->
-                    <!-- masih PR masalah tag -->
-                    <div class="form-group col-md-6">
-                        <label for="tags">Tagar</label>
-                        <input type="text" class="form-control" id="tags" ng-model="tags" ng-list="#" >
-                        <span id="helpBlock" class="help-block">Maksimal 3 tagar, setiap tagar dimulai dengan "#"</span>
-                        {{tags|json}}
 
-
-                        <!-- <tags-input ng-model="tags" add-on-paste="true">
-                            <auto-complete source="tagslist"></auto-complete>
-                        </tags-input>
-                        <p>Model: {{tags}}</p> -->
-
-                    </div>
+                <div class="row" ng-show="getAuth.user_tipe == 'pemerintah'">
                     <!-- skpd -->
-                    <div class="form-group col-md-6">
-                        <label for="skpd">SKPD <small>Isi jika sudah tahu pasti</small></label>
+                    <div class="form-group col-md-12">
+                        <label for="skpd">SKPD <small ng-hide="getAuth.user_tipe == 'pemerintah' ">Isi jika sudah tahu pasti</small></label>
                         <!-- <input type="text" ng-model="skpd" uib-typeahead="skpd.nLengkap for skpd in listskpd | filter:$viewValue | limitTo:8" class="form-control" placeholder="SKPD"> -->
-                        <input type="text" ng-model="skpd" uib-typeahead="skpd as skpd.nLengkap for skpd in listskpd | filter:$viewValue | limitTo:8" class="form-control" placeholder="SKPD">
-
+                        <input type="text" ng-model="skpd" uib-typeahead="skpd as skpd.nama for skpd in listskpd | filter:$viewValue | limitTo:8" class="form-control" placeholder="SKPD">
+                        <!-- skpd as skpd.nama for skpd in listskpd -->
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary pull-right" ng-click="next()"ng-disabled="inputdraft.$invalid">Submit</button>
+
+                <div class="row" ng-hide="getAuth.user_tipe == 'pemerintah'">
+                    <div class="col-md-12">
+                        <!-- skpd -->
+                        <uib-tabset active="tagskpd">
+                            <uib-tab index="0" heading="Tagar" ng-click="tab.skpd=null">
+                                <!-- tagar -->
+                                <div class="form-group" style="margin-top:10px">
+                                    <label for="tags">Input usulan berdasarkan tagar(#)</label>
+                                    <span id="helpBlock" class="help-block pull-right">Maksimal 3 tagar, setiap tagar dimulai dengan "#"</span>
+                                    <input type="text" class="form-control" id="tags" ng-model="tab.tags" ng-list="#" ng-required="tagskpd == 0 && getAuth.user_tipe != 'pemerintah'">
+                                </div>
+
+                            </uib-tab>
+                            <uib-tab index="1" heading="SKPD" ng-click="tab.tags=null">
+                                <div class="form-group" style="margin-top:10px">
+                                    <label for="skpd">Input usulan berdasarkan SKPD</label>
+                                    <span id="helpBlock" class="help-block pull-right">Isi jika sudah tahu pasti</span>
+                                    <!-- <input type="text" ng-model="skpd" uib-typeahead="skpd.nLengkap for skpd in listskpd | filter:$viewValue | limitTo:8" class="form-control" placeholder="SKPD"> -->
+                                    <input type="text" ng-model="tab.skpd" uib-typeahead="skpd as skpd.nama for skpd in listskpd | filter:$viewValue | limitTo:8" class="form-control" placeholder="SKPD" ng-required="tagskpd == 1 && getAuth.user_tipe != 'pemerintah'">
+                                    <!-- skpd as skpd.nama for skpd in listskpd -->
+                                </div>
+
+                            </uib-tab>
+                        </uib-tabset>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary pull-right" ng-click="next()" ng-disabled="inputdraft.$invalid">Submit</button>
             </form>
         </div>
 
-        <!-- input informasi 1 -->
-        <div ng-show="step == 1">
-            <h4>Informasi <span class="small">minimal untuk rancangan awal</span></h4>
-            <form role="form">
-                <div class="row">
-                    <div class="col-md-12">
-                        <label for="kpi">Indikator Kinejra Program</label>
-                    </div>
+
+        <!-- input informasi -->
+
+        <div  ng-show="step == 1">
+
+                <form role="form" name="inputinformasi" ng-submit="submitInformasi()" novalidate>
+                    <h3>Informasi <span class="small">minimal untuk rancangan awal</span></h3>
+                    <hr>
                     <div class="row row-tight">
-                        <div class="form-group col-md-6">
-                            <textarea class="form-control" name="kpi" rows="2" ng-model="kpi"></textarea>
+                        <div class="alert alert-danger" ng-hide="errorloginmessage == ''">
+                            <!-- Email dan password tidak cocok, mohon ulangi. -->
+                            {{ errorloginmessage }}
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="ikp">Indikator Kinejra Program</label>
                         </div>
 
-                        <div class="form-group form-inline col-md-6">
-                            <input type="number" class="form-control" id="kpi.jumlah" placeholder="Jumlah target" ng-model="kpi_jumlah"> &nbsp;
-                            <div class="form-group">
-                                <!-- <select class="form-control" id="unit" ng-model="kpi_unit">
-                                    <option selected="selected">m2</option>
-                                    <option>orang</option>
-                                    <option>lainnya</option>
-                                </select> -->
-                                <select class="form-control" ng-model="kpi_unit" ng-options="unit for unit in listunit" ng-init="kpi_unit = listunit[0]" ><option></option></select>
+                        <div class="form-group col-md-12" show-errors>
+                            <textarea class="form-control" type="text" id="ikp_konten" name="ikp_konten" rows="2" ng-model="ikp_konten" ng-required="draft_result.draft_tipe == 'Rancangan'" placeholder="Tuliskan indikator kinerja program" capitalize-first></textarea>
+                            <div ng-messages="inputinformasi.ikp_konten.$error" ng-show="inputinformasi.ikp_konten.$touched" >
+                                <span class="help-block" ng-message="required">Indikator kinerja program harus diisi harus diisi</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-8 col-xs-8" show-errors>
+                            <input type="number" class="form-control" id="ikp_jumlah" name="ikp_jumlah" placeholder="Jumlah target" ng-model="ikp_jumlah" ng-required="inputinformasi.ikp_konten.$error.required">
+                            <div ng-messages="inputinformasi.ikp_jumlah.$error" ng-show="inputinformasi.ikp_jumlah.$touched">
+                                <span class="help-block" ng-message="required">Indikator kinerja program harus diisi harus diisi</span>
                             </div>
                         </div>
 
-                    </div>
-                    <div class="form-group col-md-6">
-                        <div class="input-group">
-                            <div class="input-group-addon">Rp</div>
-                            <input type="number" class="form-control" id="asumsibiaya" placeholder="Asumsi biaya" ng-model="asumsibiaya">
-                            <div class="input-group-addon">.00</div>
-                        </div>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <input type="text" class="form-control" id="sumberdana" placeholder="Sumber dana*" ng-model="sumberdana">
-
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-group col-md-6">
-                        <label for="jeniskegiatan">Jenis kegiatan*</label>
-                        <div class="form-group">
-                            <select class="form-control" id="jeniskegiatan" ng-model="jeniskegiatan">
-                                <option>Kegiatan baru</option>
-                                <option>Usulan baru</option>
-                                <option>lainnya</option>
+                        <div class="form-group col-md-4 col-xs-4" show-errors>
+                            <select class="form-control" id="ikp_unit" name="ikp_unit" ng-model="ikp_unit" ng-options="unit for unit in listunit" ng-required="inputinformasi.ikp_konten.$error.required">
+                                <option value="">Unit</option>
                             </select>
+                            <div ng-messages="inputinformasi.ikp_unit.$error" ng-show="inputinformasi.ikp_unit.$touched">
+                                <span class="help-block" ng-message="required">Harus diisi</span>
+                            </div>
                         </div>
-
                     </div>
-                </div>
-                <div class="row row-tight">
-                    <button type="submit" class="btn btn-default" ng-click="prev()">Edit sebelumnya</button>
-                    <button type="submit" class="btn btn-default pull-right" ng-click="next()">Submit</button>
 
-                </div>
+                    <div class="row">
+                        <div class="form-group inline col-md-12" show-errors>
+                            <label for="anggaran">Rencana anggaran</label>
+                            <div class="input-group">
+                                <div class="input-group-addon">Rp</div>
+                                <!-- <input type="text" class="form-control" id="exampleInputAmount" placeholder="Amount"> -->
+                                <input type="number" class="form-control" name="anggaran" id="anggaran" placeholder="Asumsi jumlah anggaran" ng-model="anggaran" ng-required="draft_result.draft_tipe == 'Rancangan'">
+                                <div class="input-group-addon">,00</div>
+                            </div>
+                            <div class="pull-right"   ng-messages="inputinformasi.anggaran.$error" ng-show="inputinformasi.anggaran.$touched">
+                                <span class="help-block" ng-message="required">Rencana anggaran harus diisi harus diisi</span>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12" show-errors>
+                            <!-- <label for="sumberdana">Rencana Sumber Dana</label> -->
+                            <input type="text" class="form-control" id="sumberanggaran" name="sumberanggaran" placeholder="Asumsi sumber anggaran" ng-model="sumberanggaran" ng-required="draft_result.draft_tipe == 'Rancangan'" capitalize-first>
+                            <div class="pull-right"   ng-messages="inputinformasi.sumberanggaran.$error" ng-show="inputinformasi.sumberanggaran.$touched">
+                                <span class="help-block" ng-message="required">Rencana sumber anggaran harus diisi harus diisi</span>
+                            </div>
+                        </div>
+                    </div>
 
 
-            </form>
+                    <div class="row">
+                        <div class="form-group col-md-6" >
+                            <label for="jeniskegiatan">Jenis kegiatan*</label>
+                            <div class="form-group" show-errors>
+                                <select class="form-control" id="jeniskegiatan" name="jeniskegiatan" ng-model="jeniskegiatan" ng-required="draft_result.draft_tipe == 'Rancangan'">
+                                    <option value="">Jenis kegiatan</option>
+                                    <option>Kegiatan baru</option>
+                                    <option>Usulan baru</option>
+                                </select>
+                                <div ng-messages="inputinformasi.jeniskegiatan.$error" ng-show="inputinformasi.jeniskegiatan.$touched">
+                                    <span class="help-block" ng-message="required">Jenis kegiatan harus diisi</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- informasi tambahan -->
+                    <h3>Informasi <span class="small">pelengkap untuk dipertimbangkan</span></h3>
+                    <hr>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label for="uploadPhoto">Unggah foto</label>
+                            <span class="help-block" style="float: right !important">Gambar harus berekstensi .jpg .jpeg atau .png</span>
+                            <!-- <button ng-file-select ng-model="myFiles" ng-file-change="upload($files)">Upload</button> -->
+                            <input type="file" id="uploadPhoto">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label for="uploadProposal">Unggah proposal</label>
+                            <span class="help-block" style="float: right !important">Dokumen harus berekstensi .doc .docx atau .pdf</span>
+                            <input type="file" id="uploadProposal">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label for="keterangan">Catatan tambahan</label>
+                            <textarea class="form-control" id="keterangan" name="keterangan" ng-model="keterangan" rows="2"></textarea>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary pull-right" ng-disabled="inputinformasi.$invalid">Submit</button>
+                </form>
+
+            <div class="clearfix"></div>
         </div>
-
-        <div  ng-show="step == 2">
-            <h4>Informasi <span class="small">pelengkap untuk dipertimbangkan</span></h4>
-            <form role="form">
-                <div class="row">
-                    <div class="form-group col-md-6">
-                        <label for="uploadPhoto">Unggah foto</label>
-                        <input type="file" id="uploadPhoto">
-                        <p class="help-block">Usuhakan foto jelas</p>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="uploadProposal">Unggah proposal</label>
-                        <input type="file" id="uploadProposal">
-                    </div>
-
-                </div>
-
-                <div class="row">
-                    <div class="form-group col-md-12">
-                        <label for="konten">Catatan tambahan</label>
-                        <textarea class="form-control" name="konten" rows="2"></textarea>
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-default" ng-click="prev()">Edit sebelumnya</button>
-                <button type="submit" class="btn btn-default pull-right">Submit</button>
-
-            </form>
-        </div>
-        <div class="clearfix"></div>
-
     </div>
+
     <!-- end main -->
 </div>

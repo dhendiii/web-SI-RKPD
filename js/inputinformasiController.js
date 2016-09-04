@@ -55,7 +55,7 @@ app.controller('inputinformasiController', ['$scope', '$state', 'fetcher', 'auto
         fetcher.postInformasi(data, function(response) {
             console.log(response);
             if (response.response == 'OK' && response.status_code == 200) {
-                $state.go('beranda');
+                $state.go('home');
                 console.log('berhasil');
                 console.log(data._id)
             } else {

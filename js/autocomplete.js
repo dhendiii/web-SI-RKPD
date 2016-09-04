@@ -45,29 +45,6 @@ app.factory('autocomplete', ['$http', function($http) {
             ];
         },
 
-        // getSKPD             : function(){
-        //     return {
-        //         'Sekretariat Daerah' : ['Sekretariat Daearh','Asisten Perekonomian & Pembangunan Bagian Administrasi Pembangunan',
-        //                                 'Asisten Perekonomian & Pembangunan Bagian Administrasi Kesejahteraan Rakyat',
-        //                                 'Asisten Perekonomian & Pembangunan Bagian Administrasi Perekonomian',
-        //                                 'Asisten Pemerintahan Bagian Pemerintahan',
-        //                                 'Asisten Pemerintahan Bagian Hukum',
-        //                                 'Asisten Pemerintahan Bagian Organisasi',
-        //                                 'Asisten Pemerintahan Bagian Administrasi Umum',
-        //                                 'Asisten Pemerintahan Bagian Humas & Protokol',
-        //                                 'Asisten Pemerintahan Bagian Keuangan',
-        //                                 'Asisten Pemerintahan Bagian Umum',
-        //                                 'Asisten Pemerintahan Bagian Perlengkapan'],
-        //         'Dinas Daerah'       : ['Dinas Pendidikan, Pemuda, dan Olah Raga', 'Dinas Tenaga Kerja Transmigrasi dan Sosial',
-        //                                 'Dinas Koperasi, UMKM, Perindustrian, Perdagangan, dan Pertanian',
-        //                                 'Dinas Kebersihan dan Pertanaman', 'Dinas Pendapatan Daerah'],
-        //         'Kantor Daerah'      : ['Kantor Arsip, Perpustakaan, dan Pengolahan Data Electronik',
-        //                                 'Kantor Kesatuan Bangsa', 'Kantor Pelayan Perizinan Terpadu',
-        //                                 'Satuan Polisi Pamong Praja','Kantor Lingkungan Hidup','Inspektorat'],
-        //         'Badan Daerah'       : ['Badan Kepegawaian Daerah','Badan Perencanaan Pembangunan Daerah'],
-        //         'Lainnya'            : ['Rumah Sakit Umum Daerah Cibabat', 'Sekretariat KOPRI'],
-        //     };
-        // },
 
 
         getSKPD             : function(){
@@ -102,6 +79,16 @@ app.factory('autocomplete', ['$http', function($http) {
             ];
         },
 
+        getSubmitInfo             : function(){
+            return  [
+                {'id' : '1',      'Lengkap' : 'Indikator kinerja program'},
+                {'id' : '2',      'Lengkap' : 'Asumsi anggaran'},
+                {'id' : '3',      'Lengkap' : 'Rencana sumber anggaran'},
+                {'id' : '4',      'Lengkap' : 'Proposal'},
+                {'id' : '5',      'Lengkap' : 'Foto'},
+                {'id' : '6',      'Lengkap' : 'Lainnya'},
+            ];
+        },
 
         getTag              : function(){
             return [

@@ -1,0 +1,263 @@
+<div class="container">
+    <div class="col-md-8 col-centered">
+        <form role="form" name="editdraft" ng-submit="updateDraft()" novalidate>
+            <!-- row konten -->
+            <!-- <h3>Usulan/ Rancangan</h3> -->
+            <h3>Edit/ Memperbarui {{draft.draft_tipe}}</h3>
+            <p>
+                Isi yang perlu diperbarui saja.
+            </p>
+            <hr>
+            <div class="row row-tight">
+                <div class="alert alert-danger" ng-hide="errorloginmessage == ''">
+                    <!-- Email dan password tidak cocok, mohon ulangi. -->
+                    {{ errorloginmessage }}
+                </div>
+            </div>
+            <!-- Usulan/ Rancangan berubah sesuai user yang input -->
+            <div class="row">
+                <div class="form-group col-md-12" show-errors>
+                    <label for="kegiatan">Konten</label>
+                    <div ng-class="kegiatan.length ? 'text-edited' : ''">
+                        {{draft.kegiatan}}
+                    </div>
+                    <textarea class="form-control" type="text" id="kegiatan" name="kegiatan" rows="2" ng-model="kegiatan" capitalize-first>testss</textarea>
+                    <div ng-messages="editdraft.kegiatan.$error" ng-show="editdraft.kegiatan.$touched">
+                        <span class="help-block" ng-message="required">Usulan kegiatan harus diisi harus diisi</span>
+                    </div>
+                    <!-- {{draft.kegiatan}} -->
+                    <!-- <p> {{inputdraft.konten.$valid}}</p> -->
+                </div>
+            </div>
+
+            <!-- row lokasi -->
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <label for="lokasi_cakupan">Cakupan Usulan/ Rancangan</label>
+                    <div ng-class="lokasi_cakupan != '' ? 'text-edited' : ''">
+                        {{showlocation(draft.lokasi_cakupan, draft.lokasi_detail, draft.lokasi_kelurahan, draft.lokasi_kecamatan)}}
+                    </div>
+                    <select class="form-control" id="lokasi_cakupan" ng-model="lokasi_cakupan">
+                        <option value="">Cakupan</option>
+                        <option value="kota">Tingkat Kota</option>
+                        <option value="kecamatan">Tingkat Kecamatan</option>
+                        <option value="kelurahan">Tingkat Keluarahan</option>
+                        <option value="dusun">Tingkat Dusun</option>
+                    </select>
+
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <label class="col-md-12" for="lokasi_label" ng-hide="lokasi_cakupan == 'kota' || lokasi_cakupan == ''">Lokasi</label>
+                <div class="form-group col-md-6 col-sm-6" ng-hide="lokasi_cakupan == 'kota' || lokasi_cakupan == ''" show-errors>
+                    <select class="form-control" id="lokasi_kecamatan" name="lokasi_kecamatan" ng-model="lokasi_kecamatan" ng-options="kec.kec for kec in dataLokasi" ng-required="lokasi_cakupan != 'kota' && lokasi_cakupan != ''">
+                        <!-- <input type="number" ng-required="{{checked}}" class="form-control" id="inputamount" data-ng-model="itemamount" step="any" ng-show="checked"/> -->
+                        <option value="">Kecamatan</option>
+                    </select>
+                    <!-- {{ ng-required }} {{ ng-show == false }} -->
+                    <div ng-messages="editdraft.lokasi_kecamatan.$error" ng-show="editdraft.lokasi_kecamatan.$touched">
+                        <span class="help-block" ng-message="required">Kecamatan harus diisi</span>
+                    </div>
+                </div>
+
+
+                <div class="form-group col-md-6 col-sm-6"  ng-hide="lokasi_cakupan == 'kota' || lokasi_cakupan == 'kecamatan' || lokasi_cakupan == ''" show-errors>
+                    <select class="form-control" id="lokasi_kelurahan" name="lokasi_kelurahan" ng-model="lokasi_kelurahan" ng-required="lokasi_cakupan == 'kelurahan'  || lokasi_cakupan == 'dusun'" ng-options="kel.kel for kel in lokasi_kecamatan.kels">
+                        <!-- ng-required="ng-hide == false" -->
+                        <option value="">Kelurahan</option>
+                    </select>
+                    <div ng-messages="editdraft.lokasi_kelurahan.$error" ng-show="editdraft.lokasi_kelurahan.$touched">
+                        <span class="help-block" ng-message="required">Kelurahan harus diisi</span>
+                    </div>
+                </div>
+
+
+                <div class="form-group col-md-12" ng-hide="lokasi_cakupan == 'kota' || lokasi_cakupan == 'kecamatan' || lokasi_cakupan == 'kelurahan' || lokasi_cakupan == ''" show-errors>
+                    <label for="lokasi_label">Detail lokasi</label>
+                    <input type="text" class="form-control" id="lokasi_detail" name="lokasi_detail" ng-model="lokasi_detail"  ng-required="lokasi_cakupan == 'dusun'" placeholder="Detail lokasi" capitalize-first>
+                    <!-- ng-required="ng-hide == false " -->
+                    <div ng-messages="editdraft.lokasi_detail.$error" ng-show="editdraft.lokasi_detail.$touched">
+                        <span class="help-block" ng-message="required">Detail lokasi harus diisi</span>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-12" ng-show="draft.tags">
+                    <div class="form-group" style="margin-top:10px">
+                        <label for="tags">Input usulan berdasarkan tagar(#)</label>
+                        <span id="helpBlock" class="help-block pull-right">Maksimal 3 tagar, setiap tagar dimulai dengan "#"</span>
+                        <div ng-class="tags != '' ? 'text-edited' : ''">
+                            <div ng-repeat="tag in draft.tags" style="display:inline-block">
+                                <span>#{{tag}} </span>
+                            </div>
+
+                        </div>
+                        <input type="text" class="form-control" id="tags" ng-model="tags" ng-list="#">
+                    </div>
+                </div>
+                <div class="col-md-12" ng-show="draft.skpd">
+
+                    <div class="form-group" style="margin-top:10px">
+                        <label for="skpd">Input usulan berdasarkan SKPD</label>
+                        <span id="helpBlock" class="help-block pull-right">Isi jika sudah tahu pasti</span>
+                        <div ng-class="skpd != draft.skpd ? 'text-edited' : ''">
+                            {{draft.skpd}}
+                        </div>
+                        <!-- <input type="text" ng-model="skpd" uib-typeahead="skpd.nLengkap for skpd in listskpd | filter:$viewValue | limitTo:8" class="form-control" placeholder="SKPD"> -->
+                        <input type="text" ng-model="skpd" uib-typeahead="skpd as skpd.nama for skpd in listskpd | filter:$viewValue | limitTo:8" class="form-control" placeholder="SKPD">
+                        <!-- skpd as skpd.nama for skpd in listskpd -->
+                    </div>
+
+                </div>
+                    <!-- skpd -->
+            </div>
+            <div class="row" ng-show="draft.draft_tipe == 'Usulan' && getAuth.user_tipe == 'pemerintah'">
+                <div class="form-group col-md-12" >
+                    <label for="verifikasi_usulan">Verifikasi Usulan</label>
+                    <div class="" ng-class="verifikasi != '' ? 'text-edited' : ''">
+                            {{draft.verifikasi}}
+                            <span ng-show="draft.verifikasi == 'Tidak lolos verifikasi'"> dengan keterangan : {{draft.verifikasi_ket}}</span>
+                    </div>
+                    <div class="form-group" show-errors>
+                        <select class="form-control" id="verifikasi" name="verifikasi" ng-model="verifikasi">
+                            <option value="">Hasil verifikasi</option>
+                            <option>Tidak lolos verifikasi</option>
+                            <option>Lolos verifikasi</option>
+                        </select>
+                    </div>
+                    <textarea ng-show="verifikasi == 'Tidak lolos verifikasi'" class="form-control" type="text" id="verifikasi_ket" name="verifikasi_ket" rows="2" ng-model="verifikasi_ket" placeholder="Tuliskan alasan usulan ditolak" capitalize-first></textarea>
+
+                </div>
+            </div>
+
+
+            <!-- input informasi -->
+
+            <h3>Informasi <span class="small">minimal untuk rancangan awal</span></h3>
+            <hr>
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="ikp">Indikator Kinejra Program</label>
+                </div>
+                <div class="col-md-12" ng-class="ikp_konten != '' ? 'text-edited' : ''">
+                        {{draft.ikp_konten}}
+                        <span>{{draft.ikp_jumlah}}</span>
+                        <span>{{draft.ikp_unit}}</span>
+                </div>
+                <div class="form-group col-md-12" show-errors>
+                    <textarea class="form-control" type="text" id="ikp_konten" name="ikp_konten" rows="2" ng-model="ikp_konten" placeholder="Tuliskan indikator kinerja program" capitalize-first></textarea>
+                    <div ng-messages="editdraft.ikp_konten.$error" ng-show="editdraft.ikp_konten.$touched" >
+                        <span class="help-block" ng-message="required">Indikator kinerja program harus diisi harus diisi</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-8 col-xs-8" show-errors>
+                    <input type="number" class="form-control" id="ikp_jumlah" name="ikp_jumlah" placeholder="Jumlah target" ng-model="ikp_jumlah">
+                    <div ng-messages="editdraft.ikp_jumlah.$error" ng-show="editdraft.ikp_jumlah.$touched">
+                        <span class="help-block" ng-message="required">Indikator kinerja program harus diisi harus diisi</span>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-4 col-xs-4" show-errors>
+                    <select class="form-control" id="ikp_unit" name="ikp_unit" ng-model="ikp_unit" ng-options="unit for unit in listunit">
+                        <option value="">Unit</option>
+                    </select>
+                    <div ng-messages="editdraft.ikp_unit.$error" ng-show="editdraft.ikp_unit.$touched">
+                        <span class="help-block" ng-message="required">Harus diisi</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row" ng-show="draft.draft_tipe == 'Usulan' && getAuth.user_tipe == 'pemerintah'">
+                <div class="form-group col-md-12" >
+                    <label for="verifikasi_usulan">Verifikasi Indikator Kinerja Program</label>
+                    <p ng-class="(ikp_verifikasi != draft.ikp_verifikasi && ikp_verifikasi != '') ? 'text-edited' : ''">{{draft.ikp_verifikasi}} {{draft.ikp_verket}}</p>
+                    <div class="form-group" show-errors>
+                        <select class="form-control" id="ikp_verifikasi" name="ikp_verifikasi" ng-model="ikp_verifikasi">
+                            <option value="">Hasil verifikasi</option>
+                            <option>Tidak lolos verifikasi</option>
+                            <option>Lolos verifikasi</option>
+                        </select>
+                    </div>
+                    <textarea ng-show="ikp_verifikasi == 'Tidak lolos verifikasi'" ng-required="ikp_verifikasi == 'Tidak lolos verifikasi'" class="form-control" type="text" id="ikp_verket" name="ikp_verket" rows="2" ng-model="ikp_verket" placeholder="Tuliskan alasan usulan ditolak" capitalize-first></textarea>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group inline col-md-12">
+                    <label for="anggaran">Rencana anggaran</label>
+                    <div class="" >
+                        <span ng-class="anggaran != '' ? 'text-edited' : ''">{{draft.anggaran}}</span>
+                    </div>
+                    <div class="input-group">
+                        <div class="input-group-addon">Rp</div>
+                        <!-- <input type="text" class="form-control" id="exampleInputAmount" placeholder="Amount"> -->
+                        <input type="number" class="form-control" name="anggaran" id="anggaran" placeholder="Asumsi jumlah anggaran" ng-model="anggaran">
+                        <div class="input-group-addon">,00</div>
+                    </div>
+                </div>
+                <div class="form-group col-md-12" ng-show="getAuth.user_tipe == 'pemerintah'" >
+                    <!-- <label for="sumberdana">Rencana Sumber Dana</label> -->
+                    <span ng-class="sumberanggaran != '' ? 'text-edited' : ''">Rencana sumber anggararan : {{draft.sumberanggaran}}</span>
+                    <input type="text" class="form-control" id="sumberanggaran" name="sumberanggaran" placeholder="Asumsi sumber anggaran" ng-model="sumberanggaran" capitalize-first>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="form-group col-md-6" >
+                    <label for="jeniskegiatan">Jenis kegiatan*</label>
+                    <div class="" >
+                        <span ng-class="jeniskegiatan != '' && jeniskegiatan != draft.jeniskegiatan ? 'text-edited' : ''">{{draft.jeniskegiatan}}</span>
+                    </div>
+                    <div class="form-group" show-errors>
+                        <select class="form-control" id="jeniskegiatan" name="jeniskegiatan" ng-model="jeniskegiatan">
+                            <option value="">Jenis kegiatan</option>
+                            <option>Kegiatan baru</option>
+                            <option>Usulan baru</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- informasi tambahan -->
+            <h3>Informasi <span class="small">pelengkap untuk dipertimbangkan</span></h3>
+            <hr>
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <label for="uploadPhoto">Unggah foto</label>
+                    <span class="help-block" style="float: right !important">Gambar harus berekstensi .jpg .jpeg atau .png</span>
+                    <!-- <button ng-file-select ng-model="myFiles" ng-file-change="upload($files)">Upload</button> -->
+                    <input type="file" id="uploadPhoto">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <label for="uploadProposal">Unggah proposal</label>
+                    <span class="help-block" style="float: right !important">Dokumen harus berekstensi .doc .docx atau .pdf</span>
+                    <input type="file" id="uploadProposal">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <label for="keterangan">Catatan tambahan</label>
+                    <div class="" >
+                        <span ng-class="keterangan != '' && keterangan != draft.keterangan ? 'text-edited' : ''">{{draft.keterangan}}</span>
+                    </div>
+                    <textarea class="form-control" id="keterangan" name="keterangan" ng-model="keterangan" rows="2"></textarea>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary pull-right" ng-disabled="editdraft.$invalid">Submit</button>
+        </form>
+    </div>
+    <div class="clearfix"></div>
+</div>

@@ -10,10 +10,60 @@
                 <a class="navbar-brand" href="/beranda">Musrenbang Kota Cimahi</a>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
+                    <!-- <input type="text" ng-model="skpd" uib-typeahead="skpd as skpd.nama for skpd in listskpd | filter:$viewValue | limitTo:8" class="form-control" placeholder="SKPD"> -->
+                    <!-- <select ng-model="skpd" ng-options="skpd as skpd.nama for skpd in listskpd" > -->
                 <ul class="nav navbar-nav">
                     <li><a ui-sref="coba1">Beranda</a></li>
+
+                    <li>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">SKPD    <span class="caret"></span></a>
+
+                        <ul class="dropdown-menu scrollable-menu">
+                            <span ng-repeat-start="skpd in listskpd"></span>
+                            <li ng-if="skpd.nama != undefined">
+                                <a ng-href="#">{{skpd.nama}}</a>
+                            </li>
+                            <span ng-repeat-end></span>
+                        </ul>
+                    </li>
+                    <li>
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">Lokasi   <span class="caret"></span></a>
+                        <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+                            <span ng-repeat-start="kec in dataLokasi"></span>
+                            <li ng-if="kec != undefined" class="dropdown-submenu">
+                                <a tabindex="-1" href="#">{{kec.kec}}</a>
+                                <ul class="dropdown-menu">
+                                    <li ng-repeat="sub in $parent.kec.kels">
+                                        <a href="#" tabindex="-1" href="#">{{sub.kel}}</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <span ng-repeat-end></span>
+                        </ul>
+
+                    </li>
+
+                    <li>
+                        <a href="#">
+                        test1
+                        </a>
+                    </li>
+
+
+                    <!-- <li><a ui-sref="coba1">Beranda</a></li>
+                    <select>
+                        <option ng-repeat="skpd in listskpd" value="{{row}}">{{row}}</option>
+                    </select>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Page 1<span class="caret"></span></a>
+                        <ul class="dropdown-menu" ng-repeat="skpd in listskpd">
+                        <ul class="dropdown-menu" ng-repeat="skpd in listskpd">
+                          <li><a href="#">{{skpd.nama}}</a></li>
+                          <li><a href="#">test</a></li>
+                        </ul>
+                    </li>
                     <li><a ui-sref="coba1">Bantuan</a></li>
-                    <li><a ui-sref="coba2">Kontak</a></li>
+                    <li><a ui-sref="coba2">Kontak</a></li> -->
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li ng-show='showLogin' ng-click='login()'><a href="#"><span class="glyphicon glyphicon-log-in"></span> Masuk/Daftar</a></li>

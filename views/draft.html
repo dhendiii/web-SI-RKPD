@@ -1,0 +1,389 @@
+<div class="container">
+
+    <!-- navigasi hasil post -->
+    <div class="row pagetitle">
+        <div class="container-fluid" style="font-size: 18px; color: #ffffff; font-weight: bold; display: inline-block;">
+            Halaman {{draft.draft_tipe}}
+        </div>
+    </div>
+
+    <!-- left side bar -->
+    <div class="col-md-3 col-sm-12 col-xs-12 pull-right sidebar">
+        <div class="col-md-12">
+            <h4>Cari rancangan/ usulan</h4>
+            <form class="form" role="form">
+                <div class="form-group">
+                    <label for="keyword">Kata kunci:</label>
+                    <input type="text" class="form-control" id="keyword" placeholder="Kata kunci">
+                    <a href="#advancedsearch" class="help-block" data-toggle="collapse">Pencarian canggih</a>
+                    <div id="advancedsearch" class="collapse">
+                        <form class="form" role="form">
+                            <div class="form-group">
+                                <label for="draft-type">Pilih jenis draft:</label>
+                                <select class="form-control" id="Rancangan">
+                                    <option>Semua</option>
+                                    <option>Rancangan</option>
+                                    <option>Usulan</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="location">Pilih lokasi:</label>
+
+                                <select class="form-control" id="kecamatan">
+                                    <option>Semua</option>
+                                    <option>kecamatan1</option>
+                                    <option>kecamatan2</option>
+                                </select>
+                                </br>
+                                <select class="form-control" id="kelurahan">
+                                    <option>Semua</option>
+                                    <option>kelurahan1</option>
+                                    <option>kelurahan2</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="verification">Pilih verifikasi:</label>
+
+                                <select class="form-control" id="verification">
+                                    <option>Semua</option>
+                                    <option>Belum terverifikasi</option>
+                                    <option>Lolos verifikasi</option>
+                                    <option>Tidak lolos verifikasi</option>
+
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="tag">Tagar:</label>
+                                <input type="text" class="form-control" id="tag" placeholder="Tagar">
+                                <span class="help-block">Mulai dengan "#" dan 1 kata saja</span>
+                            </div>
+                        </form>
+                    </div>
+                    <button type="submit" class="btn btn-default">Cari</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-md-12">
+            <h4>Tambah Usulan</h4>
+            <button type="button" class="btn btn-primary btn-block" style="text-align:left" ng-click="$state.go('inputdraft')">
+                Tambah Usulan <span class=" glyphicon glyphicon-plus pull-right"></span>
+            </button>
+        </div>
+        <hr>
+    </div>
+
+    <!-- post list -->
+    <div class="col-md-9 col-sm-12 col-xs-12 pull-left">
+
+        <!--draft -->
+        <div class="row draft draft-detail card-border">
+            <div class="col-md-2 col-sm-2 col-xs-3 rank">
+                <div class="col-md-12">
+                    <div class="row">{{(draft.like/(draft.like+draft.dislike))*100}}%</div>
+                    <div class="row rank-vote">{{draft.like+draft.dislike}}</div>
+                </div>
+            </div>
+            <div class="col-md-10 col-sm-10 col-xs-9">
+                <div class="row"> {{ draft.kegiatan }} <span class="row-posted">Lokasi : </span><span class="location">{{showlocation(draft.lokasi_cakupan, draft.lokasi_detail, draft.lokasi_kelurahan, draft.lokasi_kecamatan)}}</span>
+                    <!-- function buat lokasi -->
+                    <div class="pull-right" ng-show="getAuth._id == draft.user_id || getAuth.user_tipe == 'pemerintah'">
+
+                        <a href="#" ng-click="$state.go('editdraft', {'draft_id' : draft._id})">edit</a>
+                    </div>
+                </div>
+
+                <div class="row row-posted">
+                    Diusulkan oleh : <a href=# ng-class="showtipeuser(draft.user.user_tipe)">{{draft.user.nama_depan + ' ' + draft.user.nama_belakang}}</a>
+                    pada : <span class="postdate">{{draft.created_at}}</span>
+                </div>
+                <div class="row row-tags">
+                    <a href="#" ng-class="showtipedraft(draft.draft_tipe)">{{draft.draft_tipe}}</a>
+                    <a href="#" class="label label-skpd">{{draft.skpd}}</a>
+                    <div ng-repeat="tags in draft.tags" style="display:inline-block">
+                        <a href="#" class="label label-tag" style="margin-right:3px">#{{tags}}</a>
+                    </div>
+                    <label href="#" ng-class="showtipeveri(draft.verifikasi)">{{draft.verifikasi}}</label> <span style="font-size: 85%; color : #D52724">{{draft.verifikasi_ket}}</span>
+                </div>
+                <div class="row row-bottomlink">
+                    <ul class="list-inline" style="margin-bottom:2px">
+                        <li>{{}} informasi</li>
+                        <li>{{}} komentar</li>
+                        <li>
+                            <a href="#" id="thums-up" ng-click="vote(draft, 'like')"> <span class=" glyphicon glyphicon-thumbs-up"></span>{{draft.like}}</a>
+                        </li>
+                        <li>
+                            <a href="#" id="thums-down" ng-click="vote(draft, 'dislike')"> <span class=" glyphicon glyphicon-thumbs-down"></span> {{draft.dislike}}</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- draft ends here -->
+
+        <!-- infos & comments -->
+        <!-- <div class="row"> -->
+        <div class="row draft-detail card-border">
+            <div class="col-md-12">
+                <h4>Informasi <span class="small">minimal untuk rancangan awal</span></h4>
+            </div>
+            <div class="row row-tight">
+                <div class="col-md-6">
+                    <!-- <div class="col-sm-3 col-xs-3"> -->
+                    <label class="control-label">Indikator kinerja program</label>
+                    <!-- </div> -->
+                    <!-- <div class="col-sm-9 col-xs-9 add-padding-bottom"> -->
+                    <p ng-show="draft.ikp_konten">
+                        {{draft.ikp_konten}}
+                        <span>{{draft.ikp_jumlah}}</span>
+                        <span>{{draft.ikp_unit}}</span>
+                        <br>
+                        <span ng-class="showtipeveri(draft.ikp_verifikasi)">{{draft.ikp_verifikasi}}</span> <span style="font-size: 85%; color : #D52724">{{draft.ikp_verket}}</span>
+                    </p>
+                    <p ng-show="!draft.ikp_konten" style="color : #D52724">
+                        Belum ditentukan
+                    </p>
+                    <!-- </div> -->
+                </div>
+                <div class="col-md-6">
+                    <label class="control-label">Asumsi angggaran</label>
+                    <p ng-show="draft.anggaran">
+                        <strong>Rp </strong> {{draft.anggaran}}
+                        <br>
+                        <span ng-class="showtipeveri(draft.anggaran_verifikasi)">{{draft.anggaran_verifikasi}}</span> <span style="font-size: 85%; color : #D52724">{{draft.anggaran_verket}}</span>
+                    </p>
+                    <p ng-show="!draft.anggaran" style="color : #D52724">
+                        Belum ditentukan
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="row row-tight">
+                <div class="col-md-6">
+                    <label class="control-label">Rencana sumber anggaran*</label>
+                    <p ng-show="draft.sumberanggaran">
+                        {{draft.sumberanggaran}}
+                    </p>
+                    <p ng-show="!draft.sumberanggaran" style="color : #D52724">
+                        Belum ditentukan
+                    </p>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="control-label">Jenis program/ kegiatan</label>
+                    <p ng-show="draft.jeniskegiatan">
+                        {{draft.jeniskegiatan}}
+                    </p>
+                    <p ng-show="!draft.jeniskegiatan" style="color : #D52724">
+                        Belum ditentukan
+                    </p>
+                </div>
+
+            </div>
+            <hr>
+
+            <div class="row row-tight">
+                <!-- <div class="row row-tight"> -->
+                <div class="col-sm-12">
+                    <label class="control-label">Catatan tambahan</label>
+                    <p ng-show="draft.keterangan">
+                        {{draft.keterangan}}
+                    </p>
+                    <p ng-show="!draft.keterangan" style="color : #D52724">
+                        Belum ada
+                    </p>
+                </div>
+            </div>
+
+            <div class="row row-tight">
+                <div class="col-sm-12">
+                    <label class="control-label">Proposal</label>
+                    <span ng-class="showtipeveri(draft.proposal_verifikasi)">{{draft.proposal_verifikasi}}</span> <span style="font-size: 85%; color : #D52724">{{draft.proposal_verket}}</span>
+                    <p>
+                        Tidak ada proposal
+                    </p>
+                </div>
+            </div>
+
+            <div class="row row-tight">
+                <div class="col-sm-12">
+                    <label class="control-label">Foto</label>
+                    <span ng-class="showtipeveri(draft.foto_verifikasi)">{{draft.foto_verifikasi}}</span> <span style="font-size: 85%; color : #D52724">{{draft.foto_verket}}</span>
+                    <!-- <a href="#edit-verifikasi" class=" small" data-toggle="collapse">4 foto</a> -->
+                </div>
+
+                <div class="col-sm-12">
+                    <div class="col-md-6 col-sm-6" style="padding-bottom: 10px;">
+                        <a href="#" class="thumbnail thumbnail-warp" style="margin-bottom:0px">
+                            <img src="https://media-cdn.tripadvisor.com/media/photo-s/03/01/3e/ce/alam-wisata-cimahi-awc.jpg" alt="#" >
+                        </a>
+                    </div>
+                    <div class="col-md-6 col-sm-6" style="padding-bottom: 10px;">
+                        <a href="#" class="thumbnail thumbnail-warp" style="margin-bottom:0px">
+                            <img src="https://img.ifcdn.com/images/40d55179818e5acc595735d4d87c48bcd95afbbf423dc5e1da0270b57be0c5bb_1.jpg" alt="#" >
+                        </a>
+                    </div>
+                    <div class="col-md-6 col-sm-6" style="padding-bottom: 10px;">
+                        <a href="#" class="thumbnail thumbnail-warp" style="margin-bottom:0px">
+                            <img src="http://wa2010.kabarkita.org/files/images/dsc_2065-rambu-lalu-lintas-cimahi.preview.jpg" alt="#" >
+                        </a>
+                    </div>
+                    <div class="col-md-6 col-sm-6" style="padding-bottom: 10px;">
+                        <a href="#" class="thumbnail thumbnail-warp" style="margin-bottom:0px">
+                            <img src="https://bkuproject.files.wordpress.com/2010/12/3.jpg" alt="#" >
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <!-- progress -->
+        <div class="row draft row-tight draft-detail card-border">
+            <div class="col-md-12">
+                <h4>Progres</h4>
+            </div>
+            <div class="row row-tight">
+                <!-- <div class="row row-tight"> -->
+                <div class="col-sm-6">
+                    <label class="control-label">Hasil forum*</label>
+                    <p ng-show="draft.realisasi">
+                        {{draft.realisasi}}
+                    </p>
+                    <p ng-show="!draft.realisasi" style="color : #D52724">
+                        Belum ada
+                    </p>
+                </div>
+
+                <div class="col-sm-6">
+
+                    <label class="control-label">Tahun realisasi</label>
+                    <p ng-show="draft.realisasi_th">
+                        {{draft.realisasi_th}}
+                    </p>
+                    <p ng-show="!draft.realisasi_th" style="color : #D52724">
+                        Belum ada
+                    </p>
+                </div>
+            </div>
+
+        </div>
+        <!-- progress ends here -->
+
+        <!-- <div class="col-md-9 col-sm-12 col-xs-12 pull-left"> -->
+        <div class="row draft row-tight draft-detail card-border">
+
+            <div class="row row-tight">
+                <div class="col-md-12">
+                    <h4>Komentar, Informasi tambahan dan Timbal balik dari Pemerintah</h4>
+                </div>
+                <div class="col-sm-12" ng-show="getAuth">
+                    <form role="form" name="inputFeedback" ng-submit="submitFeedback();" novalidate>
+                        <uib-tabset active="formFeedback">
+
+                            <uib-tab index="0" heading="Tambah Komentar" ng-click="clearInput()">
+                                <div class="form-group">
+                                    <textarea class="form-control animated"  style="margin-top:10px" name="konten_komentar" ng-model="Model.konten_komentar" placeholder="Tulis komentar" ng-required="formFeedback == 0" capitalize-first> </textarea>
+                                </div>
+                            </uib-tab>
+
+                            <uib-tab index="1" heading="Tambah Informasi" ng-click="clearInput()">
+                                <div class="form-group">
+                                    <select class="form-control pull-right col-md-6"  style="margin-top:10px; margin-bottom:10px" id="tipe" name="tipe" ng-model="Model.tipe" ng-options="tipe.Lengkap for tipe in listSubmitInfo" ng-required="formFeedback == 1">
+                                        <option value="">Jenis informasi</option>
+                                    </select>
+                                    <textarea class="form-control animated" name="konten_informasi" ng-model="Model.konten_informasi" placeholder="Tulis informasi tambahan" ng-required="formFeedback == 1" capitalize-first> </textarea>
+                                    <div class="form-group col-md-12" style="margin-top:10px;" ng-show="tipe.id==5">
+                                        <label for="uploadPhoto">Unggah foto</label>
+                                        <span class="help-block" style="float: right !important">Usuhakan foto jelas</span>
+                                        <input type="file" id="uploadPhoto" ng-required="formFeedback == 1">
+                                    </div>
+                                    <div class="form-group col-md-12" style="margin-top:10px;"  ng-show="tipe.id==4">
+                                        <label for="uploadProposal">Unggah proposal</label>
+                                        <span class="help-block" style="float: right !important">Dokumen harus berekstensi .doc .docx atau .pdf</span>
+                                        <input type="file" id="uploadProposal" ng-required="formFeedback == 1">
+                                    </div>
+                                </div>
+                            </uib-tab>
+
+                            <uib-tab index="2" heading="Request Informasi" ng-show="getAuth.user_tipe == 'pemerintah'">
+                                <div class="form-group">
+                                    <textarea class="form-control animated"  style="margin-top:10px" name="konten_request" ng-model="Model.konten_request" placeholder="Request informasi" ng-required="formFeedback == 2" capitalize-first> </textarea>
+                                </div>
+                            </uib-tab>
+                        </uib-tabset>
+                        <button type="submit" class="btn btn-primary pull-right" ng-disabled="inputFeedback.$invalid" >Submit</button>
+                    </form>
+                </div>
+                <hr>
+                <div class="row row-tight">
+                    <p class="col-md-12" ng-show="!draft.feedback.length" style="color : #D52724">
+                        Belum ada komentar, informasi tambahan, atau timbalbalik.
+                    </p>
+                </div>
+
+                <div class="row row-tight" ng-repeat="feed in draft.feedback | orderBy: '-created_at'" ng-class="$odd ? 'background-grey' : ''">
+
+                    <div class="col-md-12 comment">
+                        <div class="row">
+                            <div class="col-md-12">
+                                {{feed.konten}}
+                            </div>
+                            <div class="col-md-12">
+                                <div class="row-posted">
+                                    Dipos oleh :<a href=# ng-class="showtipeuser(feed.user.user_tipe)">{{feed.user.nama_depan + ' ' + feed.user.nama_belakang}}</a>
+                                    pada : <span class="postdate">{{feed.created_at}}</span>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="row-tags">
+                                    <span  ng-hide="!feed.status" ng-class="showtipefeed(feed.tipe)">{{(feed.tipe !== 'Komentar' && feed.tipe !== 'Request informasi') ? 'Informasi : ' : ''}}{{feed.tipe}}</span>
+                                    <span  ng-class="showverifeed(feed.status)">{{feed.status}}</span> <span style="font-size: 85%; color : #D52724">{{feed.status_ket}}</span>
+                                    <span class="row-bottomlink">
+                                        <ul class="list-inline" style="margin-bottom:2px">
+                                            <li>
+                                                <a href="#" id="thums-up" ng-click="voteFeed(feed, 'like')"> <span class=" glyphicon glyphicon-thumbs-up"></span> {{feed.like}}</a>
+                                            </li>
+                                            <li>
+                                                <a href="#" id="thums-down" ng-click="voteFeed(feed, 'dislike')"> <span class=" glyphicon glyphicon-thumbs-down"></span> {{feed.dislike}}</a>
+                                            </li>
+                                            <li>
+                                                <a href="#" ng-click="verification = !verification" ng-show="getAuth.user_tipe == 'pemerintah'">Perbarui hasil verifikasi</a>
+                                            </li>
+                                            <!-- <li>
+                                                <a href="#" ng-click="deleteFeedback(feed)">Hapus</a>
+                                            </li> -->
+                                        </ul>
+                                    </span>
+                                </div>
+                                <div class="form-group small" ng-show="verification">
+                                    <form class="form-inline" role="form" name="updatestatusfeed" ng-submit="updateFeedStatus(feed, status_e, status_ket_e)" novalidate="">
+                                        <select class="form-control" ng-model="status_e">
+                                            <option value="">Hasil verifikasi</option>
+                                            <option>Tidak lolos verifikasi</option>
+                                            <option>Lolos verifikasi</option>
+                                        </select>
+                                        <input ng-show="status_e == 'Tidak lolos verifikasi'" ng-required="status_e == 'Tidak lolos verifikasi'" class="form-control" type="text" rows="1" ng-model="status_ket_e" placeholder="Tuliskan alasan usulan ditolak">
+                                        <button type="submit" class="btn btn-primary" ng-disabled="updatestatusfeed.$invalid" ng-click="verification = !verification">Submit</button>
+
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- infos & comments ends here -->
+        <div class="clearfix"></div>
+    </div>
+
+
+</div>

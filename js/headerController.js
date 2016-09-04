@@ -1,3 +1,5 @@
-app.controller('headerController', ['$scope', '$rootScope', '$state', 'localStorageService', function($scope, $rootScope, $state, localStorageService){
+app.controller('headerController', ['$scope', '$rootScope', '$state', 'localStorageService', 'fetcher', function($scope, $rootScope, $state, localStorageService, fetcher){
+
+
 
 }]);

@@ -1,62 +1,101 @@
 <div class="container">
 
-    <div class="authpage">
-        <form role="form" ng-submit="submitUser()">
+    <div class="col-md-8 col-centered">
+        <div class="col-md-12">
+            <div class="alert alert-danger" ng-hide="errorloginmessage == ''">
+                 <!-- Email dan password tidak cocok, mohon ulangi. -->
+                 {{ errorloginmessage }}
+            </div>
+        </div>
+
+        <form name="register" role="form" ng-submit="submitUser()" novalidate>
 
             <!-- row nama -->
             <!-- <div class="form-group form-inline"> -->
             <div class="col-md-12">
                 <label for="nama">Nama</label>
             </div>
-            <div class="form-group col-md-6">
-                <input type="text" class="form-control" id="nama_depan" placeholder="Nama depan" ng-model="nama_depan">
-            </div>
 
+            <div class="form-group col-md-6" show-errors>
+                <input type="text" class="form-control" name="nama_depan" id="nama_depan" placeholder="Nama depan" ng-model="nama_depan" ng-required="true" capitalize-first>
+                <div ng-messages="register.nama_depan.$error" ng-show="register.nama_depan.$touched">
+                    <span class="help-block" ng-message="required">Nama depan harus diisi</span>
+                </div>
+            </div>
             <div class="form-group col-md-6">
-                <input type="text" class="form-control" id="nama_belakang" placeholder="Nama belakang" ng-model="nama_belakang">
+                <input type="text" class="form-control" id="nama_belakang" placeholder="Nama belakang" ng-model="nama_belakang" capitalize-first>
             </div>
 
             <!-- row ktp -->
-            <div class="form-group col-md-12">
-                <label for="no-ktp">Nomor KTP</label>
-                <input type="number" class="form-control" id="no_ktp" placeholder="Nomor Kartu Tanda Penduduk" ng-model="no_ktp">
-                <span class="help-block" style="margin-bottom:0px">Tulis angka saja tanpa karakter tambahan</span>
+            <div class="form-group col-md-12" show-errors>
+                <label for="no-ktp" class="control-label">Nomor KTP<small style="font-weight: lighter">   Tulis angka saja tanpa karakter tambahan</small></label>
+                <input type="number" name="no_ktp" class="form-control" id="no_ktp" placeholder="Nomor Kartu Tanda Penduduk" ng-model="no_ktp" ng-required="true" ng-minlength="16" ng-maxlength="16">
+                <div ng-messages="register.no_ktp.$error" ng-show="register.no_ktp.$touched">
+                    <span class="help-block" ng-message="required">Nomor KTP harus diisi</span>
+                    <span class="help-block" ng-message="minlength">Nomor KTP kurang panjang, harus 16 angka</span>
+                    <span class="help-block" ng-message="maxlength">Nomor KTP terlalu panjang, harus 16 angka</span>
+                </div>
             </div>
 
             <!-- row lokasi -->
-            <div class="form-group col-md-12">
+            <div class="form-group col-md-12" show-errors>
                 <label for="lokasi_label">Alamat rumah</label>
-                <input type="text" class="form-control" id="lokasi_detail" ng-model="lokasi_detail" placeholder="Detail lokasi">
+                <input type="text" class="form-control" id="lokasi_detail" name="lokasi_detail" ng-model="lokasi_detail" ng-required="true" placeholder="Detail lokasi" capitalize-first>
+                <div ng-messages="register.lokasi_detail.$error" ng-show="register.lokasi_detail.$touched">
+                    <span class="help-block" ng-message="required">Detail lokasi harus diisi</span>
+                </div>
             </div>
-            <div class="form-group col-md-6">
-                <div class="btn-group col-md-12 nopadding" uib-dropdown is-open="status.kecamatan" ng-hide="lokasi_cakupan == 'kota'" >
-                    <button  class="btn btn-default col-md-12 btn-dropdown" id="lokasi_kecamatan" ng-model="lokasi_kecamatan"  uib-dropdown-toggle ng-disabled="disabled" ng-style="lokasi_kecamatan == '' ? {'color' : buttonplaceholder} : ''">
+            <div class="form-group col-md-6 col-sm-6" show-errors>
+                <select class="form-control" id="lokasi_kecamatan" name="lokasi_kecamatan" ng-model="lokasi_kecamatan" ng-options="kec.kec for kec in dataLokasi" ng-required="true">
+                    <option value="">Kecamatan</option>
+                </select>
+                <div ng-messages="register.lokasi_kecamatan.$error" ng-show="register.lokasi_kecamatan.$touched">
+                    <span class="help-block" ng-message="required">Kecamatan harus diisi</span>
+                </div>
+                <!-- <div class="btn-group col-md-12 nopadding" uib-dropdown is-open="status.kecamatan" ng-hide="lokasi_cakupan == 'kota'" show-errors>
+                    <button  class="btn btn-default col-md-12 btn-dropdown" id="lokasi_kecamatan" name="lokasi_kecamatan" ng-model="lokasi_kecamatan"  ng-required="true" uib-dropdown-toggle ng-disabled="disabled" ng-style="lokasi_kecamatan == '' ? {'color' : buttonplaceholder} : ''">
                         <div class="text-left col-xs-10 nopadding">{{ (lokasi_kecamatan == '') ? 'Kecamatan' : lokasi_kecamatan }}</div><div class="col-md-2"><span class="caret"></span></div>
                     </button>
                     <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
                         <li role="menuitem" ng-repeat="kecamatanValue in listKecamatan" ng-click="kecamatanChanged(kecamatanValue)"><a href="#">{{ kecamatanValue }}</a></li>
                     </ul>
-                </div>
+                </div> -->
             </div>
-            <div class="form-group col-md-6">
-                <div class="btn-group col-md-12 nopadding" uib-dropdown is-open="status.kelurahan" >
-                    <button class="btn btn-default col-md-12 btn-dropdown" id="lokasi_kelurahan" ng-model="lokasi_kelurahan"  uib-dropdown-toggle ng-disabled="disabled" ng-style="lokasi_kelurahan == '' ? {'color' : buttonplaceholder} : ''">
+            <div class="form-group col-md-6 col-sm-6" show-errors>
+                <select class="form-control" id="lokasi_kelurahan" name="lokasi_kelurahan" ng-model="lokasi_kelurahan" ng-required="true" ng-options="kel.kel for kel in lokasi_kecamatan.kels">
+                    <option value="">Kelurahan</option>
+                </select>
+                <div ng-messages="register.lokasi_kelurahan.$error" ng-show="register.lokasi_kelurahan.$touched">
+                    <span class="help-block" ng-message="required">Kelurahan harus diisi</span>
+                </div>
+                <!-- <div class="btn-group col-md-12 nopadding" uib-dropdown is-open="status.kelurahan" show-errors>
+                    <button class="btn btn-default col-md-12 btn-dropdown" id="lokasi_kelurahan" name="lokasi_kelurahan" ng-model="lokasi_kelurahan" ng-required="true"  uib-dropdown-toggle ng-disabled="disabled" ng-style="lokasi_kelurahan == '' ? {'color' : buttonplaceholder} : ''">
                         <div class="text-left col-xs-10 nopadding">{{ (lokasi_kelurahan == '') ? 'Kelurahan' : lokasi_kelurahan }}</div><div class="col-md-2"><span class="caret"></span></div>
                     </button>
                     <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
                         <li role="menuitem" ng-repeat="kelurahanValue in listKelurahan" ng-click="kelurahanChanged(kelurahanValue)"><a href="#">{{ kelurahanValue }}</a></li>
                     </ul>
-                </div>
+                </div> -->
             </div>
+
+
+
+
             <div class="">
                 <div class="form-group col-md-12">
                     <label for="no-nik">Pendaftaran tambahan untuk pemerintah</label>
                 </div>
-                <div class="form-group col-md-6 ">
-                    <input type="text" ng-model="skpd" uib-typeahead="skpd.nLengkap for skpd in listskpd | filter:$viewValue | limitTo:8" class="form-control" placeholder="SKPD">
+                <div class="form-group col-md-6 " show-errors>
+                    <input type="text" ng-model="skpd" id="skpd" name="skpd" uib-typeahead="skpd.nLengkap for skpd in listskpd | filter:$viewValue | limitTo:8" class="form-control" placeholder="SKPD" ng-required="true">
+                    <div ng-messages="register.skpd.$error" ng-show="register.skpd.$touched">
+                        <span class="help-block" ng-message="required">SKPD harus diisi</span>
+                    </div>
                 </div>
-                <div class="form-group col-md-6 ">
-                    <input type="text" class="form-control" id="Jabatan" placeholder="Jabatan" ng-model="skpd_role">
+                <div class="form-group col-md-6 " show-errors>
+                    <input type="text" class="form-control" id="jabatan" name="jabatan" placeholder="Jabatan" ng-model="skpd_role" ng-required="true">
+                    <div ng-messages="register.jabatan.$error" ng-show="register.jabatan.$touched">
+                        <span class="help-block" ng-message="required">Jabatan pada SKPD harus diisi</span>
+                    </div>
                 </div>
             </div>
 
@@ -64,29 +103,46 @@
             <div class="col-md-12">
                 <label for="email">E-mail dan nomor telepon</label>
             </div>
-            <div class="form-group col-md-6">
-                <input type="email" class="form-control" id="email" placeholder="Alamat e-mail" ng-model="email">
+            <div class="form-group col-md-6" show-errors>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Alamat e-mail" ng-model="email" ng-required="true">
+                <div ng-messages="register.email.$error" ng-show="register.email.$touched">
+                    <span class="help-block" ng-message="required">Email harus diisi</span>
+                    <span class="help-block" ng-message="email">Format penulisan email salah</span>
+                </div>
             </div>
             <!-- row no hp -->
-            <div class="form-group col-md-6">
-                <input type="number" class="form-control" id="no_hp" placeholder="Nomor telepon" ng-model="no_hp">
+            <div class="form-group col-md-6" show-errors>
+                <input type="number" class="form-control" id="no_hp" name="no_hp" placeholder="Nomor telepon" ng-model="no_hp" ng-required="true">
+                <div ng-messages="register.no_hp.$error" ng-show="register.no_hp.$touched">
+                    <span class="help-block" ng-message="required">Nomor telepon harus diisi</span>
+                </div>
             </div>
 
             <!-- row password -->
             <div class="col-md-12">
                 <label for="email">Password atau kata kunci</label>
             </div>
-            <div class="form-group col-md-6">
-                <input type="password" class="form-control" id="password" placeholder="Password" ng-model="password">
+
+            <div class="form-group col-md-6" show-errors>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Password" ng-model="password" ng-minlength="10" ng-required="true">
+                <div ng-messages="register.password.$error" ng-show="register.password.$touched">
+                    <span class="help-block" ng-message="required">Password harus diisi</span>
+                    <span class="help-block" ng-message="minlength">Password kurang panjang</span>
+                </div>
             </div>
-            <div class="form-group col-md-6">
-                <input type="password" class="form-control" id="password" placeholder="Ulangi password">
+            <div class="form-group col-md-6" show-errors>
+                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" ng-model="passwordConfirm" match-password="password" placeholder="Tulis sekali lagi password Anda" ng-required="true">
+                <div ng-messages="register.confirmPassword.$error" ng-show="register.password.$touched">
+                    <span class="help-block" ng-message="required" class="message">Password harus ditulis kembali</span>
+                    <span class="help-block" ng-message="passwordMatch" class="message">Password berbeda dengan sebelumnya</span>
+                </div>
             </div>
 
-            <!-- row nik -->
 
-            <div class="col-md-12">
-                <button type="submit" class="btn btn btn-primary ">
+            <!-- coba dynamic select -->
+
+            <div class="col-md-12 pull-right    ">
+                <button type="submit" class="btn btn btn-primary pull-right" ng-disabled="register.$invalid">
                     Daftar
                 </button>
 

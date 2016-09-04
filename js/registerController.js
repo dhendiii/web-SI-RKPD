@@ -84,7 +84,7 @@ app.controller('registerController', ['$scope', '$state', 'fetcher', 'autocomple
                 // localStorageService.set('nama_depan', response.result.nama_depan);
                 // localStorageService.set('nama_belakang', response.result.nama_belakang);
                 // localStorageService.set('role', response.result.role);
-                $state.go('beranda');
+                $state.go('home');
                 $scope.$parent.$parent.showLogin    = false;
                 $scope.$parent.$parent.getAuth      = response.result;
                 // console.log('berhasil');

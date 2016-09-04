@@ -15,10 +15,11 @@ app.controller('loginController', ['$scope', '$state', 'fetcher', 'localStorageS
             if (response.response == 'OK' && response.status_code == 200) {
                 localStorageService.set('_id', response.result._id);
                 localStorageService.set('result', response.result);
+                console.log(response.result);
                 // localStorageService.set('nama_depan', response.result.nama_depan);
                 // localStorageService.set('nama_belakang', response.result.nama_belakang);
                 // localStorageService.set('role', response.result.role);
-                $state.go('beranda');
+                $state.go('home');
                 $scope.$parent.$parent.showLogin    = false;
                 $scope.$parent.$parent.getAuth      = response.result;
 

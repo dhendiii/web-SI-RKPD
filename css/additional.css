@@ -51,7 +51,7 @@
     margin-top:5px;
     margin-bottom:5px;
     padding-top:5px;
-    padding-left: 10px;
+    /*padding-left: 10px;*/
     padding-bottom:     5px;
 }
 
@@ -63,21 +63,21 @@
 .row-bottomlink{
     font-weight: lighter;
     font-size: 95%;
-    color:#888;
+    color:#55BEE8;
     margin-bottom: 2px;
 }
 
 .row-bottomlink a{
-    color:#888;
+    color:#55BEE8;
 }
 
 .row-bottomlink a[href]:hover
 .row-bottomlink a[href]:focus{
-    color:#888;
+    color:#2F687F;
 }
 
 .rank{
-    font-size: 18px;
+    font-size: 15px;
     font-weight: bold;
     text-align: left;
 }
@@ -96,20 +96,32 @@
 .location[href]:focus {
   color: #2F687F;
 }
-
-
-.usrname {
-    color: #0E9547;
-}
-
-.usrname[href]:hover,
-.usrname[href]:focus {
-  color: #06401E;
-}
-
 .postdate {
-    color: #18A7E0;
+    color: #55BEE8;
 }
+.postdate[href]:hover,
+.postdate[href]:focus {
+    color: #2F687F;
+}
+
+
+.usrname_mas {
+    color: #55BEE8;
+}
+.usrname_mas[href]:hover,
+.usrname_mas[href]:focus {
+  color: #2F687F;
+}
+
+.usrname_pem {
+    color: #49C687;
+}
+.usrname_pem[href]:hover,
+.usrname_pem[href]:focus {
+  color: #2F7F57;
+}
+
+
 
 .label-tag {
   background-color: #97CC04;
@@ -117,6 +129,13 @@
 .label-tag[href]:hover,
 .label-tag[href]:focus {
   background-color: #5E7F02;
+}
+.label-skpd {
+  background-color: #49C687;
+}
+.label-skpd[href]:hover,
+.label-skpd[href]:focus {
+  background-color: #2F7F57;
 }
 
 .label-usulan {
@@ -126,7 +145,21 @@
 .label-usulan[href]:focus {
     background-color: #2F687F;
 }
+.label-rancangan {
+    background-color: #E37623;
+}
+.label-rancangan[href]:hover,
+.label-rancangan[href]:focus {
+    background-color: #7F4214;
+}
 
+.label-verified-yet {
+    background-color: #F0C025;
+}
+.label-verified-yet[href]:hover,
+.label-verified-yet[href]:focus {
+    background-color: #7F6616;
+}
 .label-verified-not {
     background-color: #D52724;
 }
@@ -134,13 +167,36 @@
 .label-verified-not[href]:focus {
     background-color: #7F1716;
 }
-
-.label-verified-yet {
-    background-color: #E37623;
+.label-verified-ok {
+    background-color: #008000;
 }
-.label-verified-yet[href]:hover,
-.label-verified-yet[href]:focus {
-    background-color: #7F4214;
+.label-verified-ok[href]:hover,
+.label-verified-ok[href]:focus {
+    background-color: #007F00;
+}
+
+/*label tipe feedback*/
+.label-comment {
+    background-color: #FB5012;
+}
+.label-comment[href]:hover,
+.label-comment[href]:focus {
+    background-color: #007F00;
+}
+.label-informasi {
+    background-color: #8ACB88;
+}
+.label-informasi[href]:hover,
+.label-informasi[href]:focus {
+    background-color: #007F00;
+}
+
+.label-rqst {
+    background-color: #006992;
+}
+.label-rqst[href]:hover,
+.label-rqst[href]:focus {
+    background-color: #007F00;
 }
 
 #thums-up{
@@ -233,6 +289,58 @@
     margin-right:0px;
 }
 
+.card-border{
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 4px;
+    border: 1px solid #f3f3f3;
+}
+
+.draft-detail{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left:0px;
+    margin-right:0px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.add-padding-bottom{
+    padding-bottom:10px;
+}
+
+/*.thumbnail-warp{
+    margin-bottom: 0px;
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+}*/
+.thumbnail-warp{
+    overflow: hidden;
+    position: relative;
+    display: block;
+    width: 400px;
+    height: 200px;
+    max-width: 100%;
+    margin: 0;
+    /*padding: 0;*/
+    padding-left: 0px;
+    background: white;
+    border: none;
+    border-radius: 3px;
+    /*box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);*/
+}
+
+.thumbnail-warp img{
+    width: auto;
+    /*position: absolute;*/
+    top: -9999px;
+    bottom: -9999px;
+    left: -9999px;
+    right: -9999px;
+    margin: auto;
+}
+
 .text-left {
     text-align: left;
 }
@@ -269,6 +377,22 @@
     margin-bottom: 5px;
 }
 
+.text-edited {
+    color : #2F7F57!important;
+    font-weight : bold;
+}
+
+.scrollable-menu {
+    height: auto;
+    max-height: 200px;
+    overflow-x: hidden;
+}
+
 body {
     overflow-y: scroll;
+}
+
+a.deco-none {
+    text-decoration:none;
+    color : #333;
 }

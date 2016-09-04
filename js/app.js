@@ -1,6 +1,6 @@
 var angular = angular;
 
-var app = angular.module('app', ['ui.router', 'ui.bootstrap', 'ngTagsInput', 'ngMessages', 'ngTouch', 'ngPassword', 'LocalStorageModule', 'ct.ui.router.extras.core', 'permission', 'permission.ui']);
+var app = angular.module('app', ['ui.router', 'ui.bootstrap', 'ngTagsInput', 'ngMessages', 'ngTouch', 'ngTagsInput', 'ngPassword', 'LocalStorageModule', 'ct.ui.router.extras.core', 'permission', 'permission.ui', 'ngFileUpload']);
 
 app.config(function ($stateProvider, $locationProvider, $urlRouterProvider) {
     'use strict';
@@ -14,32 +14,6 @@ app.config(function ($stateProvider, $locationProvider, $urlRouterProvider) {
     });
 
     $stateProvider
-    // .state('header', {
-    //     url:'/header',
-    //     templateUrl : '/views/header.html',
-    //     controller : 'headerController',
-    // })
-
-    // .state('home', {
-    //     url: '',
-    //     // templateUrl: 'views/beranda.html',
-    //     // controller: 'berandaController',
-    //     views: {
-    //         '' : {
-    //             templateUrl : 'views/beranda.html',
-    //             // controller : 'berandaController'
-    //         },
-    //         'sidebar' : {
-    //             templateUrl : 'views/sidebar.html',
-    //             // controller  : 'sidebarController'
-    //         },
-    //         'drafts' : {
-    //             templateUrl : 'views/drafts.html',
-    //             // controller  : 'draftsController'
-    //         }
-    //     }
-    // })
-
     .state('home', {
         // abstract: true,
         url: '',
@@ -47,26 +21,32 @@ app.config(function ($stateProvider, $locationProvider, $urlRouterProvider) {
         controller : 'berandaController'
     })
 
-    .state('home.drafts', {
-        templateUrl : 'views/drafts.html',
-        controller : 'draftsController'
+    // .state('home.drafts', {
+    //     templateUrl : 'views/drafts.html',
+    //     controller : 'draftsController'
+    // })
+    //
+    // .state('draft', {
+    //     url : '/draft',
+    //     templateUrl : 'views/draft.html',
+    //     controller : 'informasiController',
+    // })
+
+    .state('draft', {
+        url : '/draft/:draft_id',
+        templateUrl : 'views/draft.html',
+        controller : 'draftController',
+        params : {
+            draft_id : 'draft_id',
+        }
     })
-
-    // .state('home.sidebar', {
-    //     templateUrl : 'views/sidebar.html',
-    //     controller : 'sidebarController'
-    // })
-
-    // .state('sidebar', {
-    //     // url : '/',
-    //     templateUrl : 'views/sidebar.html',
-    //     controller : 'sidebarController',
-    // })
-
-    .state('informasi', {
-        url : '/informasi',
-        templateUrl : 'views/informasi.html',
-        controller : 'informasiController',
+    .state('draftedit', {
+        url : '/draft/:draft_id/edit',
+        templateUrl : 'views/editdraft.html',
+        controller : 'editdraftController',
+        params : {
+            draft_id : 'draft_id',
+        },
     })
 
     .state('inputdraft', {
@@ -76,21 +56,9 @@ app.config(function ($stateProvider, $locationProvider, $urlRouterProvider) {
         data: {
             permissions: {
                 only: ['isAuthorized'],
-                redirectTo: 'beranda'
+                redirectTo: 'home'
             }
         }
-    })
-
-    .state('inputinformasi', {
-        url : '/inputinformasi',
-        templateUrl : 'views/inputinformasi.html',
-        controller : 'inputinformasiController',
-        // data: {
-        //     permissions: {
-        //         only: ['isAuthorized'],
-        //         redirectTo: 'beranda'
-        //     }
-        // }
     })
 
     .state('authlanding', {
@@ -101,7 +69,7 @@ app.config(function ($stateProvider, $locationProvider, $urlRouterProvider) {
         data : {
             permissions: {
                 except: ['isAuthorized'],
-                redirectTo: 'beranda'
+                redirectTo: 'home'
             }
         }
     })
@@ -124,6 +92,12 @@ app.config(function ($stateProvider, $locationProvider, $urlRouterProvider) {
         controller : 'registerController'
     })
 
+
+    .state('test', {
+        url : '/test',
+        templateUrl : 'views/uploadfile.html',
+        controller : 'uploadfile',
+    })
 
 
 
@@ -162,10 +136,23 @@ app.directive('capitalizeFirst', function($parse) {
    };
 });
 
-app.controller('MainController', ['$scope', '$rootScope', '$state', 'localStorageService', function($scope, $rootScope, $state, localStorageService){
+app.controller('MainController', ['$scope', '$rootScope', '$state', 'localStorageService', 'autocomplete', 'fetcher', function($scope, $rootScope, $state, localStorageService, autocomplete, fetcher){
     'use strict';
 
     $scope.header           = 'views/header.html';
+    $scope.dataLokasi           = autocomplete.getKelurahan();
+
+    $scope.listskpd           = [];
+    var fetchskpd         = function(){
+        fetcher.getSKPD(function(response) {
+            if (response.response == 'OK' && response.status_code == 200) {
+                $scope.listskpd = response.result;
+            }
+        });
+        console.log($scope.listskpd);
+    };
+
+    fetchskpd();
 
     $scope.showLogin      = _.isNull(localStorageService.get('result'));
     // $scope.getAuthId        = localStorageService.get('_id');
@@ -177,7 +164,7 @@ app.controller('MainController', ['$scope', '$rootScope', '$state', 'localStorag
         $scope.showLogin    = true;
         localStorageService.remove('_id');
         localStorageService.remove('result');
-        $state.go('beranda');
+        $state.go('home');
         console.log('logout berhasil');
     };
 
